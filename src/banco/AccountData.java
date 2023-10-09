@@ -88,7 +88,7 @@ private void mostrarDatosCuenta() {
             jLabel2.setText(apellidosTitular);
             jLabel3.setText(numeroCuenta);
             jLabel4.setText(tipoCuenta);
-            jLabel5.setText(String.valueOf(saldo));
+            jLabel5.setText("$"+String.valueOf(saldo));
             jLabel16.setText(nombreCiudad);
             jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
         }
