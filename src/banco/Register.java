@@ -11,6 +11,10 @@ import java.sql.PreparedStatement;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import javax.swing.ImageIcon;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 public class Register extends javax.swing.JFrame {
     
@@ -23,6 +27,23 @@ public class Register extends javax.swing.JFrame {
         TextPrompt Prueba3 = new TextPrompt("Apellido",userTxt2);
         TextPrompt Prueba = new TextPrompt("Email",userTxt);
         TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
+        
+                ((AbstractDocument) userTxt3.getDocument()).setDocumentFilter(new DocumentFilter() {
+    @Override
+    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+        if (!text.matches("\\D+")) {
+            super.insertString(fb, offset, text, attr);
+        }
+    }
+
+    @Override
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (!text.matches("\\D+")) {
+            super.replace(fb, offset, length, text, attrs);
+        }
+    }
+    });
+        
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente2
         passTxt.addKeyListener (new KeyAdapter() {
@@ -96,13 +117,13 @@ public class Register extends javax.swing.JFrame {
 
         logolabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logolabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-dinero-tuyo-96.png"))); // NOI18N
-        rSPanelGradiente1.add(logolabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 290, 140));
+        rSPanelGradiente1.add(logolabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 140));
 
         namelabel.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         namelabel.setForeground(new java.awt.Color(255, 255, 255));
         namelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         namelabel.setText("BANCO DAVJAV");
-        rSPanelGradiente1.add(namelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 290, -1));
+        rSPanelGradiente1.add(namelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 290, -1));
 
         jPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 290, 500));
 

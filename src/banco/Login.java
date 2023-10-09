@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -61,6 +62,7 @@ public class Login extends javax.swing.JFrame {
         passTxt = new javax.swing.JPasswordField();
         rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
         jLabel2 = new javax.swing.JLabel();
+        rSButtonGradiente2 = new rsbuttongradiente.RSButtonGradiente();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -79,13 +81,13 @@ public class Login extends javax.swing.JFrame {
 
         logolabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logolabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-dinero-tuyo-96.png"))); // NOI18N
-        rSPanelGradiente1.add(logolabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 290, 140));
+        rSPanelGradiente1.add(logolabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 140));
 
         namelabel.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         namelabel.setForeground(new java.awt.Color(255, 255, 255));
         namelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         namelabel.setText("BANCO DAVJAV");
-        rSPanelGradiente1.add(namelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 290, -1));
+        rSPanelGradiente1.add(namelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 290, -1));
 
         jPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 290, 500));
 
@@ -242,7 +244,21 @@ public class Login extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 30, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 40, 30));
+
+        rSButtonGradiente2.setText("Registrarse");
+        rSButtonGradiente2.setColorPrimario(new java.awt.Color(102, 16, 141));
+        rSButtonGradiente2.setColorPrimarioHover(new java.awt.Color(148, 0, 153));
+        rSButtonGradiente2.setColorSecundario(new java.awt.Color(0, 153, 204));
+        rSButtonGradiente2.setColorSecundarioHover(new java.awt.Color(0, 194, 240));
+        rSButtonGradiente2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        rSButtonGradiente2.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
+        rSButtonGradiente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonGradiente2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, 130, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -376,6 +392,13 @@ public class Login extends javax.swing.JFrame {
             jLabel2.setIcon(iconoClickeado);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void rSButtonGradiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente2ActionPerformed
+        Register ob= new Register();
+        ob.setVisible(true);
+        ob.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
     private boolean validarCampos() {
         
@@ -517,6 +540,7 @@ public void validar() {
     private javax.swing.JLabel namelabel;
     private javax.swing.JPasswordField passTxt;
     private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
+    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente2;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
     private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables

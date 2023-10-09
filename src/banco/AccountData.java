@@ -195,7 +195,7 @@ private void mostrarDatosCuenta() {
         jLabel10.setText("Tipo de  Cuenta");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
 
-        rSPanelGradiente1.setColorPrimario(new java.awt.Color(102, 16, 141));
+        rSPanelGradiente1.setColorPrimario(new java.awt.Color(102, 0, 156));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(0, 255, 255));
         rSPanelGradiente1.setGradiente(rspanelgradiente.RSPanelGradiente.Gradiente.CENTRAL);
         rSPanelGradiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
