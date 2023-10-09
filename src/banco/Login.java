@@ -20,6 +20,7 @@ public class Login extends javax.swing.JFrame {
         TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto passTxt para activar el botón rSButtonGradiente1
+        
         passTxt.addKeyListener(new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {

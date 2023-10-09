@@ -10,25 +10,25 @@ import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
 import java.awt.Color;
 import java.awt.Cursor;
+import javax.swing.JOptionPane;
 
 
 /**
  *
  * @author USER
  */
-public class AccountData extends javax.swing.JFrame {
+public class Retirar extends javax.swing.JFrame {
     ConexionBD con=new ConexionBD();
     Connection cn=con.Conexion();
     private int idUsuario;
     int xMouse, yMouse;
     
-    public AccountData(int idUsuario) {
+    public Retirar(int idUsuario) {
         
         initComponents();
         this.idUsuario = idUsuario;
-        mostrarDatosCuenta();
+        mostrarDatosCuenta2();
     }
-    
     public int obtenerCodigoSucursal(int idUsuario) {
     try {
         String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
@@ -62,43 +62,81 @@ public class AccountData extends javax.swing.JFrame {
     return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
 }
 
-private void mostrarDatosCuenta() {
+    private void mostrarDatosCuenta2() {
+        try {
+            String sql = "SELECT cb.*, u.identificacion " +
+                         "FROM cuentas_bancarias cb " +
+                         "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
+                         "WHERE cb.id_usuario=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String nombreTitular = rs.getString("nombre_titular");
+                String apellidosTitular = rs.getString("apellidos_titular");
+                String numeroCuenta = rs.getString("numero_cuenta");
+                String tipoCuenta = rs.getString("tipo_cuenta");
+                double saldo = rs.getDouble("saldo");
+                String ciudad = rs.getString("codigo_sucursal");
+                int codigoSucursal = rs.getInt("codigo_sucursal");
+                String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
+
+                String identificacion = rs.getString("identificacion"); // Obtener la identificacion
+
+                jLabel1.setText(nombreTitular);
+                jLabel2.setText(apellidosTitular);
+                jLabel3.setText(numeroCuenta);
+                jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+private void Retirar() {
+        try {
+        double monto = Double.parseDouble(montoTxt.getText());
+        double saldoActual = obtenerSaldo(); // Obtener el saldo actual de la cuenta
+        if (monto <= saldoActual) {
+            String sql = "UPDATE cuentas_bancarias SET saldo = saldo - ? WHERE id_usuario = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setDouble(1, monto);
+            pst.setInt(2, idUsuario);
+
+            int filasAfectadas = pst.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Retiro exitoso.");
+                montoTxt.setText("");
+                // Actualizar los datos mostrados después del retiro
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo realizar el retiro."); 
+                montoTxt.setText("");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Saldo insuficiente."); 
+            montoTxt.setText("");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+private double obtenerSaldo() {
     try {
-        String sql = "SELECT cb.*, u.identificacion " +
-                     "FROM cuentas_bancarias cb " +
-                     "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                     "WHERE cb.id_usuario=?";
+        String sql = "SELECT saldo FROM cuentas_bancarias WHERE id_usuario = ?";
         PreparedStatement pst = cn.prepareStatement(sql);
         pst.setInt(1, idUsuario);
         ResultSet rs = pst.executeQuery();
 
         if (rs.next()) {
-            String nombreTitular = rs.getString("nombre_titular");
-            String apellidosTitular = rs.getString("apellidos_titular");
-            String numeroCuenta = rs.getString("numero_cuenta");
-            String tipoCuenta = rs.getString("tipo_cuenta");
-            double saldo = rs.getDouble("saldo");
-            String ciudad = rs.getString("codigo_sucursal");
-            int codigoSucursal = rs.getInt("codigo_sucursal");
-            String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
-
-            String identificacion = rs.getString("identificacion"); // Obtener la identificacion
-
-            jLabel1.setText(nombreTitular);
-            jLabel2.setText(apellidosTitular);
-            jLabel3.setText(numeroCuenta);
-            jLabel4.setText(tipoCuenta);
-            jLabel5.setText(String.valueOf(saldo));
-            jLabel16.setText(nombreCiudad);
-            jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
+            return rs.getDouble("saldo");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
 }
-
-
-    public AccountData() {
+    public Retirar() {
         initComponents();
     }
 
@@ -112,38 +150,33 @@ private void mostrarDatosCuenta() {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         rSPanelGradiente1 = new rspanelgradiente.RSPanelGradiente();
         jLabel11 = new javax.swing.JLabel();
         logolabel1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         exitbtn = new javax.swing.JPanel();
         btnExitTxt = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
         logolabel = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
+        montoTxt = new javax.swing.JTextField();
+        UserLabel = new javax.swing.JLabel();
+        rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -154,14 +187,6 @@ private void mostrarDatosCuenta() {
         jPanel1.setMinimumSize(new java.awt.Dimension(850, 500));
         jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setText("jLabel5");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 150, 20));
-
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, 150, 20));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("jLabel3");
@@ -175,10 +200,6 @@ private void mostrarDatosCuenta() {
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 150, 20));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
-        jLabel6.setText("Monto");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
-
         jLabel7.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel7.setText("Nombre");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
@@ -190,10 +211,6 @@ private void mostrarDatosCuenta() {
         jLabel9.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel9.setText("N° Cuenta");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
-        jLabel10.setText("Tipo de  Cuenta");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(102, 16, 141));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(0, 255, 255));
@@ -210,28 +227,10 @@ private void mostrarDatosCuenta() {
         logolabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-dinero-tuyo-96.png"))); // NOI18N
         rSPanelGradiente1.add(logolabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 290, 140));
 
-        jLabel13.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("DEPOSITAR");
-        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel13MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel13MouseExited(evt);
-            }
-        });
-        rSPanelGradiente1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 290, 30));
-
         jLabel14.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("CERRAR SESIÓN");
+        jLabel14.setText("DEPOSITAR");
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -244,25 +243,43 @@ private void mostrarDatosCuenta() {
                 jLabel14MouseExited(evt);
             }
         });
-        rSPanelGradiente1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 290, 30));
+        rSPanelGradiente1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 290, 30));
 
-        jLabel19.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("RETIRAR");
-        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel13.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("LOGIN");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel19MouseClicked(evt);
+                jLabel13MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel19MouseEntered(evt);
+                jLabel13MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel19MouseExited(evt);
+                jLabel13MouseExited(evt);
             }
         });
-        rSPanelGradiente1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 30));
+        rSPanelGradiente1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 290, 30));
+
+        jLabel15.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("MIRAR SALDO");
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel15MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel15MouseExited(evt);
+            }
+        });
+        rSPanelGradiente1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 290, 30));
 
         jPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 290, 500));
 
@@ -318,9 +335,6 @@ private void mostrarDatosCuenta() {
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 380, 160, 20));
-
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 180, 160, 20));
 
@@ -330,23 +344,9 @@ private void mostrarDatosCuenta() {
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 300, 160, 20));
 
-        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 340, 160, 20));
-
         jLabel12.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        jLabel12.setText("DATOS DE LA CUENTA");
+        jLabel12.setText("RETIRAR DINERO");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
-
-        jLabel15.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
-        jLabel15.setText("Ciudad");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel16.setText("jLabel5");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, 150, 20));
-
-        jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 420, 160, 20));
 
         logolabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logolabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-blockchain-technology-64.png"))); // NOI18N
@@ -362,6 +362,52 @@ private void mostrarDatosCuenta() {
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 260, 160, 20));
+
+        montoTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        montoTxt.setBorder(null);
+        montoTxt.setCaretColor(new java.awt.Color(204, 204, 204));
+        montoTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                montoTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                montoTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                montoTxtMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                montoTxtMousePressed(evt);
+            }
+        });
+        montoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montoTxtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 220, 30));
+
+        UserLabel.setFont(new java.awt.Font("Roboto Bk", 1, 16)); // NOI18N
+        UserLabel.setText("Retirar Monto");
+        jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
+
+        rSButtonGradiente1.setText("Retirar");
+        rSButtonGradiente1.setToolTipText("");
+        rSButtonGradiente1.setColorPrimario(new java.awt.Color(102, 16, 141));
+        rSButtonGradiente1.setColorPrimarioHover(new java.awt.Color(148, 0, 153));
+        rSButtonGradiente1.setColorSecundario(new java.awt.Color(0, 153, 204));
+        rSButtonGradiente1.setColorSecundarioHover(new java.awt.Color(0, 194, 240));
+        rSButtonGradiente1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        rSButtonGradiente1.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
+        rSButtonGradiente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonGradiente1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 130, -1));
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 290, 10));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 500));
 
@@ -394,30 +440,9 @@ private void mostrarDatosCuenta() {
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-        Depositar ob= new Depositar(idUsuario);
-        ob.setVisible(true);
-        ob.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_jLabel13MouseClicked
-
-    private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
-        // TODO add your handling code here:
-        jLabel13.setForeground(new Color(172,153,204));
-        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_jLabel13MouseEntered
-
-    private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseExited
-        // TODO add your handling code here:
-        jLabel13.setForeground(Color.WHITE);
-        setCursor(Cursor.getDefaultCursor());
-
-    }//GEN-LAST:event_jLabel13MouseExited
-
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // TODO add your handling code here:
-        Login ob= new Login();
+        Depositar ob= new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         this.dispose();
@@ -435,23 +460,83 @@ private void mostrarDatosCuenta() {
         setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jLabel14MouseExited
 
-    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
-        Retirar ob= new Retirar(idUsuario);
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+        Login ob= new Login();
+        ob.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
+        // TODO add your handling code here:
+        jLabel13.setForeground(new Color(172,153,204));
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_jLabel13MouseEntered
+
+    private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseExited
+        // TODO add your handling code here:
+        jLabel13.setForeground(Color.WHITE);
+        setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_jLabel13MouseExited
+
+    private void montoTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_montoTxtMouseClicked
+
+    }//GEN-LAST:event_montoTxtMouseClicked
+
+    private void montoTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_montoTxtMouseEntered
+        /*if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
+            userTxt.setText("");
+            userTxt.setForeground(Color.black);
+        }
+        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+            passTxt.setText("********");
+            passTxt.setForeground(Color.gray);
+        }   */
+    }//GEN-LAST:event_montoTxtMouseEntered
+
+    private void montoTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_montoTxtMouseExited
+        /*if (userTxt.getText().isEmpty()) {
+            userTxt.setText("Ingrese su nombre de usuario");
+            userTxt.setForeground(Color.gray);
+        }*/
+    }//GEN-LAST:event_montoTxtMouseExited
+
+    private void montoTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_montoTxtMousePressed
+        /*if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
+            userTxt.setText("");
+            userTxt.setForeground(Color.black);
+        }
+        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+            passTxt.setText("********");
+            passTxt.setForeground(Color.gray);
+        }*/
+    }//GEN-LAST:event_montoTxtMousePressed
+
+    private void montoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_montoTxtActionPerformed
+
+    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+        Retirar();
+    }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        AccountData ob= new AccountData(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_jLabel19MouseClicked
+    }//GEN-LAST:event_jLabel15MouseClicked
 
-    private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered
-        jLabel19.setForeground(new Color(172,153,204));
+    private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered
+        jLabel15.setForeground(new Color(172,153,204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_jLabel19MouseEntered
+    }//GEN-LAST:event_jLabel15MouseEntered
 
-    private void jLabel19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseExited
-        jLabel19.setForeground(Color.WHITE);
+    private void jLabel15MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseExited
+        jLabel15.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jLabel19MouseExited
-
+    }//GEN-LAST:event_jLabel15MouseExited
+    
     /**
      * @param args the command line arguments
      */
@@ -469,14 +554,26 @@ private void mostrarDatosCuenta() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -485,31 +582,26 @@ private void mostrarDatosCuenta() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AccountData().setVisible(true);
+                new Retirar().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel UserLabel;
     private javax.swing.JLabel btnExitTxt;
     private javax.swing.JPanel exitbtn;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -518,11 +610,11 @@ private void mostrarDatosCuenta() {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel logolabel;
     private javax.swing.JLabel logolabel1;
+    private javax.swing.JTextField montoTxt;
+    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
     // End of variables declaration//GEN-END:variables
 }
