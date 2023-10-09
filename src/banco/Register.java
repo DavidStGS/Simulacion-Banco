@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
@@ -27,8 +28,9 @@ public class Register extends javax.swing.JFrame {
         TextPrompt Prueba3 = new TextPrompt("Apellido",userTxt2);
         TextPrompt Prueba = new TextPrompt("Email",userTxt);
         TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
-        
-                ((AbstractDocument) userTxt3.getDocument()).setDocumentFilter(new DocumentFilter() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
+
+        ((AbstractDocument) userTxt3.getDocument()).setDocumentFilter(new DocumentFilter() {
     @Override
     public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
         if (!text.matches("\\D+")) {

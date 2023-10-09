@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Toolkit;
 
 
 /**
@@ -27,6 +28,8 @@ public class AccountData extends javax.swing.JFrame {
         initComponents();
         this.idUsuario = idUsuario;
         mostrarDatosCuenta();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
+
     }
     
     public int obtenerCodigoSucursal(int idUsuario) {

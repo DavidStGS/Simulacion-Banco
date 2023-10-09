@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -32,6 +33,8 @@ public class Retirar extends javax.swing.JFrame {
         initComponents();
         this.idUsuario = idUsuario;
         TextPrompt Prueba = new TextPrompt("Escribe el Monto a Retirar",montoTxt);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
+
         ((AbstractDocument) montoTxt.getDocument()).setDocumentFilter(new DocumentFilter() {
     @Override
     public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
@@ -405,7 +408,7 @@ private double obtenerSaldo() {
                 montoTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 290, 30));
+        jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 290, 30));
 
         UserLabel.setFont(new java.awt.Font("Roboto Bk", 1, 16)); // NOI18N
         UserLabel.setText("Retirar Monto");
@@ -424,10 +427,10 @@ private double obtenerSaldo() {
                 rSButtonGradiente1ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 130, -1));
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 130, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 290, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 290, 10));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 500));
 

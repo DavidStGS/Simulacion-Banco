@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
 import java.awt.Cursor;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -21,7 +22,8 @@ public class Login extends javax.swing.JFrame {
         TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto passTxt para activar el botón rSButtonGradiente1
-        
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
+
         passTxt.addKeyListener(new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
