@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import javax.swing.ImageIcon;
@@ -524,6 +524,7 @@ public class Register extends javax.swing.JFrame {
         cn.close();
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error al obtener código de ciudad: " + e.getMessage());
+        System.out.print("Error al obtener código de ciudad: " + e.getMessage());
     }
 
     return codigoCiudad;
@@ -598,6 +599,7 @@ public class Register extends javax.swing.JFrame {
             cn.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
+            System.out.print("Error al registrar usuario: " + e.getMessage());
         }
     }
 }

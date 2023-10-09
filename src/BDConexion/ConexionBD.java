@@ -11,8 +11,7 @@ public class ConexionBD {
 public Connection Conexion(){
 try {
 
-    cn=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/Banco","root","");
-    System.out.println("Conexión exitosa");
+    cn=(Connection) DriverManager.getConnection("jdbc:mysql://bancobd.mysql.database.azure.com:3306/bankbd","DavidSGS","24082001Sepulveda");
 }   catch (Exception e) {
         System.err.println(e.getMessage());
         System.out.println(e);
