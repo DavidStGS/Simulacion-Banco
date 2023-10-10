@@ -46,6 +46,39 @@ public class Register extends javax.swing.JFrame {
     }
     });
         
+((AbstractDocument) userTxt1.getDocument()).setDocumentFilter(new DocumentFilter() {
+    @Override
+    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+        if (text.matches("\\p{Alpha}+")) {
+            super.insertString(fb, offset, text, attr);
+        }
+    }
+
+    @Override
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (text.matches("^[a-zA-Z ]+$")) {
+            super.replace(fb, offset, length, text, attrs);
+        }
+    }
+});
+
+((AbstractDocument) userTxt2.getDocument()).setDocumentFilter(new DocumentFilter() {
+    @Override
+    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+        if (text.matches("^[a-zA-Z ]+$")) {
+            super.insertString(fb, offset, text, attr);
+        }
+    }
+
+    @Override
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (text.matches("\\p{Alpha}+")) {
+            super.replace(fb, offset, length, text, attrs);
+        }
+    }
+});
+
+
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente2
         passTxt.addKeyListener (new KeyAdapter() {

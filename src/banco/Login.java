@@ -453,7 +453,6 @@ public void validar() {
                         this.dispose();
                     }
                 } else {
-                    // Contraseña incorrecta
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                     int choice = JOptionPane.showOptionDialog(null,
                             "¿Qué desea hacer?",
@@ -464,16 +463,17 @@ public void validar() {
                             new Object[]{"Volver a intentar", "Crear nueva cuenta"},
                             "default");
 
-                    if (choice == JOptionPane.YES_OPTION) {
+                    if (choice == 0) {
                         // Volver a intentar
                         userTxt.setText(""); // Limpiar los campos
                         passTxt.setText("");
-                    } else {
+                    } else if (choice == 1) {
                         Register ob = new Register();
                         ob.setLocationRelativeTo(null);
                         ob.setVisible(true);
                         this.dispose();
                     }
+
                 }
             } else {
                 // Usuario no encontrado
