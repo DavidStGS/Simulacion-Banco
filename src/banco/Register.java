@@ -72,7 +72,7 @@ public class Register extends javax.swing.JFrame {
 
     @Override
     public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("\\p{Alpha}+")) {
+        if (text.matches("^[a-zA-Z ]+$")) {
             super.replace(fb, offset, length, text, attrs);
         }
     }
