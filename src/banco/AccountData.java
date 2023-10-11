@@ -11,6 +11,7 @@ import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto p
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.text.NumberFormat;
 
 
 /**
@@ -80,18 +81,20 @@ private void mostrarDatosCuenta() {
             String apellidosTitular = rs.getString("apellidos_titular");
             String numeroCuenta = rs.getString("numero_cuenta");
             String tipoCuenta = rs.getString("tipo_cuenta");
-            double saldo = rs.getDouble("saldo");
+            int saldo = rs.getInt("saldo");
             String ciudad = rs.getString("codigo_sucursal");
             int codigoSucursal = rs.getInt("codigo_sucursal");
             String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
 
             String identificacion = rs.getString("identificacion"); // Obtener la identificacion
-
+            NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
+            String saldoFormateado = formatoSaldo.format((int)saldo);;
+            
             jLabel1.setText(nombreTitular);
             jLabel2.setText(apellidosTitular);
             jLabel3.setText(numeroCuenta);
             jLabel4.setText(tipoCuenta);
-            jLabel5.setText("$"+String.valueOf(saldo));
+            jLabel5.setText("$" + String.valueOf(saldoFormateado));
             jLabel16.setText(nombreCiudad);
             jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
         }
