@@ -11,6 +11,7 @@ import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto p
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 
 
@@ -43,8 +44,7 @@ public class AccountData extends javax.swing.JFrame {
         if (rs.next()) {
             return rs.getInt("codigo_sucursala");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    } catch (SQLException e) {
     }
     return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
 }
@@ -60,8 +60,7 @@ public class AccountData extends javax.swing.JFrame {
         if (rs.next()) {
             return rs.getString("nombre_ciudad");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    } catch (SQLException e) {
     }
     return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
 }
@@ -88,7 +87,7 @@ private void mostrarDatosCuenta() {
 
             String identificacion = rs.getString("identificacion"); // Obtener la identificacion
             NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
-            String saldoFormateado = formatoSaldo.format((int)saldo);;
+            String saldoFormateado = formatoSaldo.format((int)saldo);
             
             jLabel1.setText(nombreTitular);
             jLabel2.setText(apellidosTitular);
@@ -98,8 +97,7 @@ private void mostrarDatosCuenta() {
             jLabel16.setText(nombreCiudad);
             jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    } catch (SQLException e) {
     }
 }
 
@@ -474,25 +472,22 @@ private void mostrarDatosCuenta() {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AccountData().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new AccountData().setVisible(true);
         });
     }
 

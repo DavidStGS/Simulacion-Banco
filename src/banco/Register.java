@@ -7,10 +7,12 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -567,18 +569,16 @@ public class Register extends javax.swing.JFrame {
 
     try {
         String sql = "SELECT codigo_ciudad FROM sucursales WHERE nombre_ciudad = ?";
-        PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql);
-        ps.setString(1, nombreCiudad);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            codigoCiudad = rs.getInt("codigo_ciudad");
+        try (PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql)) {
+            ps.setString(1, nombreCiudad);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    codigoCiudad = rs.getInt("codigo_ciudad");
+                }
+            }
         }
-
-        rs.close();
-        ps.close();
         cn.close();
-    } catch (Exception e) {
+    } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error al obtener código de ciudad: " + e.getMessage());
         System.out.print("Error al obtener código de ciudad: " + e.getMessage());
     }
@@ -639,21 +639,20 @@ public class Register extends javax.swing.JFrame {
                      "VALUES ('" + cedula + "','" + nombre + "', '" + apellidos + "', '" + correo + "', '" + hashedContrasena + "', " + codigoCiudad + ")";
 
         try {
-            java.sql.Statement set = cn.createStatement();
-            int filasAfectadas = set.executeUpdate(sql);
-
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-                Login ob = new Login();
-                ob.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
+            try (java.sql.Statement set = cn.createStatement()) {
+                int filasAfectadas = set.executeUpdate(sql);
+                
+                if (filasAfectadas > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
+                    Login ob = new Login();
+                    ob.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
+                }
             }
-
-            set.close();
             cn.close();
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
             System.out.print("Error al registrar usuario: " + e.getMessage());
         }
@@ -753,18 +752,16 @@ public class Register extends javax.swing.JFrame {
         
         try {
             String sql = "SELECT nombre_ciudad FROM sucursales";
-            java.sql.Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            while (rs.next()) {
-                String nombreCiudad = rs.getString("nombre_ciudad");
-                rSComboBox1.addItem(nombreCiudad);
+            try (java.sql.Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+                
+                while (rs.next()) {
+                    String nombreCiudad = rs.getString("nombre_ciudad");
+                    rSComboBox1.addItem(nombreCiudad);
+                }
+                
             }
-            
-            rs.close();
-            st.close();
             cn.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al llenar ComboBox de sucursales: " + e.getMessage());
         }
     }
@@ -785,13 +782,7 @@ public class Register extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -810,12 +801,27 @@ public class Register extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Register().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Register().setVisible(true);
         });
     }
 

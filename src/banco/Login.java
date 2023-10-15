@@ -8,9 +8,11 @@ import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
 import java.awt.Cursor;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 
 public class Login extends javax.swing.JFrame {
@@ -438,51 +440,67 @@ public void validar() {
         String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
 
         try {
-            java.sql.Statement set = cn.createStatement();
-            ResultSet resul = set.executeQuery(sql);
-
-            if (resul.next()) {
-                String hashedContrasena = resul.getString("contrasena");
-                if (BCrypt.checkpw(contrasena, hashedContrasena)) {
-                    resultado = 1;
-                    if (resultado == 1) {
-                        int idUsuario = resul.getInt("id");
-                        AccountData ob = new AccountData(idUsuario);
-                        ob.setLocationRelativeTo(null);
-                        ob.setVisible(true);
-                        this.dispose();
+            try (java.sql.Statement set = cn.createStatement()) {
+                ResultSet resul = set.executeQuery(sql);
+                
+                if (resul.next()) {
+                    String hashedContrasena = resul.getString("contrasena");
+                    if (BCrypt.checkpw(contrasena, hashedContrasena)) {
+                        resultado = 1;
+                        if (resultado == 1) {
+                            int idUsuario = resul.getInt("id");
+                            AccountData ob = new AccountData(idUsuario);
+                            ob.setLocationRelativeTo(null);
+                            ob.setVisible(true);
+                            this.dispose();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+                        int choice = JOptionPane.showOptionDialog(null,
+                                "¿Qué desea hacer?",
+                                "Error de inicio de sesión",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
+                                "default");
+                        if (choice == 0) {
+                            // Volver a intentar
+                            userTxt.setText(""); // Limpiar los campos
+                            passTxt.setText("");
+                        } else if (choice == 1) {
+                            Register ob = new Register();
+                            ob.setLocationRelativeTo(null);
+                            ob.setVisible(true);
+                            this.dispose();
+                        }
+                        
                     }
                 } else {
+                    // Usuario no encontrado
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                     int choice = JOptionPane.showOptionDialog(null,
-                            "¿Qué desea hacer?",
-                            "Error de inicio de sesión",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            new Object[]{"Volver a intentar", "Crear nueva cuenta"},
-                            "default");
-
-                    if (choice == 0) {
-                        // Volver a intentar
-                        userTxt.setText(""); // Limpiar los campos
-                        passTxt.setText("");
-                    } else if (choice == 1) {
-                        Register ob = new Register();
-                        ob.setLocationRelativeTo(null);
-                        ob.setVisible(true);
-                        this.dispose();
-                    }
-
+                                "¿Qué desea hacer?",
+                                "",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
+                                "default");
+                        if (choice == 0) {
+                            // Volver a intentar
+                            userTxt.setText(""); // Limpiar los campos
+                            passTxt.setText("");
+                        } else if (choice == 1) {
+                            Register ob = new Register();
+                            ob.setLocationRelativeTo(null);
+                            ob.setVisible(true);
+                            this.dispose();
+                        }
                 }
-            } else {
-                // Usuario no encontrado
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
             }
-
-            set.close();
             cn.close();
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
     }
@@ -504,25 +522,22 @@ public void validar() {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
         });
     }
 

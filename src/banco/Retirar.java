@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -62,8 +64,7 @@ public class Retirar extends javax.swing.JFrame {
         if (rs.next()) {
             return rs.getInt("codigo_sucursala");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    } catch (SQLException e) {
     }
     return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
 }
@@ -79,8 +80,7 @@ public class Retirar extends javax.swing.JFrame {
         if (rs.next()) {
             return rs.getString("nombre_ciudad");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    } catch (SQLException e) {
     }
     return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
 }
@@ -112,8 +112,7 @@ public class Retirar extends javax.swing.JFrame {
                 jLabel3.setText(numeroCuenta);
                 jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
 }
 private void Retirar() {
@@ -139,8 +138,7 @@ private void Retirar() {
             JOptionPane.showMessageDialog(null, "Saldo insuficiente."); 
             montoTxt.setText("");
         }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (HeadlessException | NumberFormatException | SQLException e) {
         }
 }
 private double obtenerSaldo() {
@@ -153,8 +151,7 @@ private double obtenerSaldo() {
         if (rs.next()) {
             return rs.getDouble("saldo");
         }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
 
     return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
@@ -271,7 +268,7 @@ private double obtenerSaldo() {
         jLabel13.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("LOGIN");
+        jLabel13.setText("CERRAR SESIÓN");
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -576,13 +573,7 @@ private double obtenerSaldo() {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -601,12 +592,27 @@ private double obtenerSaldo() {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Retirar().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Retirar().setVisible(true);
         });
     }
 
