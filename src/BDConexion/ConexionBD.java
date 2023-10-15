@@ -12,7 +12,7 @@ public class ConexionBD {
 public Connection Conexion(){
 try {
 
-    cn=(Connection) DriverManager.getConnection("jdbc:mysql:127.0.0.1:3306/banco","root","");
+    cn=(Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Banco","root","");
 }   catch (SQLException e) {
 }
 return cn;
