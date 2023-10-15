@@ -1,4 +1,5 @@
-use banco;
+create database bankbd;
+use bankbd;
 select * from usuarios;
 delete from usuarios where id=1;
 delete from usuarios where id=2;
@@ -165,6 +166,7 @@ VALUES
     (8, 'Santa Marta'),
     (9, 'Villavicencio'),
     (10, 'Manizales');
+    
     select * from usuarios
 INSERT INTO usuarios (nombre, apellidos, correo_electronico, contrasena, codigo_sucursal)
 VALUES 
