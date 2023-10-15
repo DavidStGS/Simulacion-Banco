@@ -12,6 +12,7 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import looadingPages.Loading1;
@@ -445,88 +446,110 @@ public class Login extends javax.swing.JFrame {
         return true;
 }    
     
-public void validar() {
-    
-    if (validarCampos()) {
-        ConexionBD con = new ConexionBD();
-        Connection cn = con.Conexion();
-        int resultado = 0;
-        String correo = userTxt.getText();
-        String contrasena = String.valueOf(passTxt.getPassword());
+    public void validar() {
 
-        String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
+        if (validarCampos()) {
+            ConexionBD con = new ConexionBD();
+            Connection cn = con.Conexion();
+            int resultado = 0;
+            String correo = userTxt.getText();
+            String contrasena = String.valueOf(passTxt.getPassword());
 
-        try {
-            try (java.sql.Statement set = cn.createStatement()) {
-                ResultSet resul = set.executeQuery(sql);
-                
-                if (resul.next()) {
-                    String hashedContrasena = resul.getString("contrasena");
-                    if (BCrypt.checkpw(contrasena, hashedContrasena)) {
-                        resultado = 1;
-                        if (resultado == 1) {
-                            int idUsuario = resul.getInt("id");
-                            AccountData ob = new AccountData(idUsuario);
-                            ob.setLocationRelativeTo(null);
-                            ob.setVisible(true);
-                            this.dispose();
+            String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
+
+            try {
+                try (java.sql.Statement set = cn.createStatement()) {
+                    ResultSet resul = set.executeQuery(sql);
+
+                    if (resul.next()) {
+                        String hashedContrasena = resul.getString("contrasena");
+                        if (BCrypt.checkpw(contrasena, hashedContrasena)) {
+                            resultado = 1;
+                            if (resultado == 1) {
+                                int idUsuario = resul.getInt("id");
+                                registrarInicioSesion(idUsuario);
+                                AccountData ob = new AccountData(idUsuario);
+                                ob.setLocationRelativeTo(null);
+                                ob.setVisible(true);
+                                this.dispose();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+                            int choice = JOptionPane.showOptionDialog(null,
+                                    "¿Qué desea hacer?",
+                                    "Error de inicio de sesión",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    new Object[]{"Volver a intentar", "Crear nueva cuenta"},
+                                    "default");
+                            if (choice == 0) {
+                                // Volver a intentar
+                                userTxt.setText(""); // Limpiar los campos
+                                passTxt.setText("");
+                                Loading11 ob = new Loading11();
+                                ob.setVisible(false);
+                                this.setVisible(true);
+                            } else if (choice == 1) {
+                                Loading ob = new Loading();
+                                ob.setLocationRelativeTo(null);
+                                ob.setVisible(true);
+                                this.dispose();
+                            }
+
                         }
                     } else {
+                        // Usuario no encontrado
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                         int choice = JOptionPane.showOptionDialog(null,
-                                "¿Qué desea hacer?",
-                                "Error de inicio de sesión",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
-                                "default");
-                        if (choice == 0) {
-                            // Volver a intentar
-                            userTxt.setText(""); // Limpiar los campos
-                            passTxt.setText("");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
-                        } else if (choice == 1) {
-                            Loading ob = new Loading();
-                            ob.setLocationRelativeTo(null);
-                            ob.setVisible(true);
-                            this.dispose();
-                        }
-                        
+                                    "¿Qué desea hacer?",
+                                    "",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    new Object[]{"Volver a intentar", "Crear nueva cuenta"},
+                                    "default");
+                            if (choice == 0) {
+                                // Volver a intentar
+                                userTxt.setText(""); // Limpiar los campos
+                                passTxt.setText("");
+                                Loading11 ob = new Loading11();
+                                ob.setVisible(false);
+                                this.setVisible(true);
+                            } else if (choice == 1) {
+                                Loading ob = new Loading();
+                                ob.setLocationRelativeTo(null);
+                                ob.setVisible(true);
+                                this.dispose();
+                            }
                     }
-                } else {
-                    // Usuario no encontrado
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
-                    int choice = JOptionPane.showOptionDialog(null,
-                                "¿Qué desea hacer?",
-                                "",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
-                                "default");
-                        if (choice == 0) {
-                            // Volver a intentar
-                            userTxt.setText(""); // Limpiar los campos
-                            passTxt.setText("");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
-                        } else if (choice == 1) {
-                            Loading ob = new Loading();
-                            ob.setLocationRelativeTo(null);
-                            ob.setVisible(true);
-                            this.dispose();
-                        }
                 }
+                cn.close();
+            } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
             }
-            cn.close();
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
-    }
+}
+
+    public void registrarInicioSesion(int idUsuario) {
+            ConexionBD con = new ConexionBD();
+            Connection cn = con.Conexion();
+            String sql = "INSERT INTO inicios_sesiones (id_usuario, fecha_inicio) VALUES (?, NOW())";
+
+            try {
+                try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                    ps.setInt(1, idUsuario);
+                    int filasAfectadas = ps.executeUpdate();
+
+                    if (filasAfectadas > 0) {
+
+                    } else {
+
+                    }
+                }
+                cn.close();
+            } catch (SQLException e) {
+        }
 }
 
     /**
