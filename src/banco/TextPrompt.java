@@ -6,7 +6,6 @@ package banco;
  * and open the template in the editor.
  */
 
-
 /**
  *
  * @author Monkeyelgrande
@@ -55,10 +54,10 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 
 		setText(text);
 		setFont(component.getFont());
-                
-//		setForeground(component.getForeground());
+
+		// setForeground(component.getForeground());
 		setForeground(Color.gray);
-//		setBorder(new EmptyBorder(component.getInsets()));
+		// setBorder(new EmptyBorder(component.getInsets()));
 		setHorizontalAlignment(JLabel.LEADING);
 
 		component.addFocusListener(this);
@@ -74,7 +73,7 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	 * Color to the specifice value.
 	 *
 	 * @param alpha
-	 *            value in the range of 0 - 1.0.
+	 *              value in the range of 0 - 1.0.
 	 */
 	public void changeAlpha(float alpha) {
 		changeAlpha((int) (alpha * 255));
@@ -85,7 +84,7 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	 * Color to the specifice value.
 	 *
 	 * @param alpha
-	 *            value in the range of 0 - 255.
+	 *              value in the range of 0 - 255.
 	 */
 	public void changeAlpha(int alpha) {
 		alpha = alpha > 255 ? 255 : alpha < 0 ? 0 : alpha;
@@ -105,7 +104,7 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	 * Font.ITALIC and Font.BOLD + Font.ITALIC.
 	 *
 	 * @param style
-	 *            value representing the the new style of the Font.
+	 *              value representing the the new style of the Font.
 	 */
 	public void changeStyle(int style) {
 		setFont(getFont().deriveFont(style));
@@ -130,7 +129,7 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	 * (and hide the prompt when focus is gained)
 	 *
 	 * @param show
-	 *            a valid Show enum
+	 *             a valid Show enum
 	 */
 	public void setShow(Show show) {
 		this.show = show;
@@ -150,8 +149,9 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	 * prompt will not be shown again.
 	 *
 	 * @param showPromptOnce
-	 *            when true the prompt will only be shown once, otherwise it
-	 *            will be shown repeatedly.
+	 *                       when true the prompt will only be shown once, otherwise
+	 *                       it
+	 *                       will be shown repeatedly.
 	 */
 	public void setShowPromptOnce(boolean showPromptOnce) {
 		this.showPromptOnce = showPromptOnce;
@@ -194,12 +194,12 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 
 	// Implement FocusListener
 
-        @Override
+	@Override
 	public void focusGained(FocusEvent e) {
 		checkForPrompt();
 	}
 
-        @Override
+	@Override
 	public void focusLost(FocusEvent e) {
 		focusLost++;
 		checkForPrompt();
@@ -207,17 +207,17 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 
 	// Implement DocumentListener
 
-        @Override
+	@Override
 	public void insertUpdate(DocumentEvent e) {
 		checkForPrompt();
 	}
 
-        @Override
+	@Override
 	public void removeUpdate(DocumentEvent e) {
 		checkForPrompt();
 	}
 
-        @Override
+	@Override
 	public void changedUpdate(DocumentEvent e) {
 	}
 }

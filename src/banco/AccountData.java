@@ -16,93 +16,91 @@ import java.text.NumberFormat;
 import looadingPages.Loading11;
 import looadingPages.Loading21;
 
-
 /**
  *
  * @author USER
  */
 public class AccountData extends javax.swing.JFrame {
-    ConexionBD con=new ConexionBD();
-    Connection cn=con.Conexion();
+    ConexionBD con = new ConexionBD();
+    Connection cn = con.Conexion();
     private int idUsuario;
     int xMouse, yMouse;
-    
+
     public AccountData(int idUsuario) {
-        
+
         initComponents();
         this.idUsuario = idUsuario;
         mostrarDatosCuenta();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
     }
-    
+
     public int obtenerCodigoSucursal(int idUsuario) {
-    try {
-        String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getInt("codigo_sucursala");
+            if (rs.next()) {
+                return rs.getInt("codigo_sucursala");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de
+                   // sucursal.
     }
-    return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
-}
 
-    
     public String obtenerNombreCiudad(int codigoSucursal) {
-    try {
-        String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, codigoSucursal);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, codigoSucursal);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getString("nombre_ciudad");
+            if (rs.next()) {
+                return rs.getString("nombre_ciudad");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
     }
-    return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
-}
 
-private void mostrarDatosCuenta() {
-    try {
-        String sql = "SELECT cb.*, u.identificacion " +
-                     "FROM cuentas_bancarias cb " +
-                     "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                     "WHERE cb.id_usuario=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
+    private void mostrarDatosCuenta() {
+        try {
+            String sql = "SELECT cb.*, u.identificacion " +
+                    "FROM cuentas_bancarias cb " +
+                    "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
+                    "WHERE cb.id_usuario=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            String nombreTitular = rs.getString("nombre_titular");
-            String apellidosTitular = rs.getString("apellidos_titular");
-            String numeroCuenta = rs.getString("numero_cuenta");
-            String tipoCuenta = rs.getString("tipo_cuenta");
-            int saldo = rs.getInt("saldo");
-            String ciudad = rs.getString("codigo_sucursal");
-            int codigoSucursal = rs.getInt("codigo_sucursal");
-            String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
+            if (rs.next()) {
+                String nombreTitular = rs.getString("nombre_titular");
+                String apellidosTitular = rs.getString("apellidos_titular");
+                String numeroCuenta = rs.getString("numero_cuenta");
+                String tipoCuenta = rs.getString("tipo_cuenta");
+                int saldo = rs.getInt("saldo");
+                String ciudad = rs.getString("codigo_sucursal");
+                int codigoSucursal = rs.getInt("codigo_sucursal");
+                String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
 
-            String identificacion = rs.getString("identificacion"); // Obtener la identificacion
-            NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
-            String saldoFormateado = formatoSaldo.format((int)saldo);
-            
-            jLabel1.setText(nombreTitular);
-            jLabel2.setText(apellidosTitular);
-            jLabel3.setText(numeroCuenta);
-            jLabel4.setText(tipoCuenta);
-            jLabel5.setText("$" + String.valueOf(saldoFormateado));
-            jLabel16.setText(nombreCiudad);
-            jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
+                String identificacion = rs.getString("identificacion"); // Obtener la identificacion
+                NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
+                String saldoFormateado = formatoSaldo.format((int) saldo);
+
+                jLabel1.setText(nombreTitular);
+                jLabel2.setText(apellidosTitular);
+                jLabel3.setText(numeroCuenta);
+                jLabel4.setText(tipoCuenta);
+                jLabel5.setText("$" + String.valueOf(saldoFormateado));
+                jLabel16.setText(nombreCiudad);
+                jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
     }
-}
-
 
     public AccountData() {
         initComponents();
@@ -114,7 +112,8 @@ private void mostrarDatosCuenta() {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -225,9 +224,11 @@ private void mostrarDatosCuenta() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel13MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel13MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel13MouseExited(evt);
             }
@@ -243,9 +244,11 @@ private void mostrarDatosCuenta() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel14MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel14MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel14MouseExited(evt);
             }
@@ -261,9 +264,11 @@ private void mostrarDatosCuenta() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel19MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel19MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel19MouseExited(evt);
             }
@@ -299,9 +304,11 @@ private void mostrarDatosCuenta() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseExited(evt);
             }
@@ -310,15 +317,15 @@ private void mostrarDatosCuenta() {
         javax.swing.GroupLayout exitbtnLayout = new javax.swing.GroupLayout(exitbtn);
         exitbtn.setLayout(exitbtnLayout);
         exitbtnLayout.setHorizontalGroup(
-            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exitbtnLayout.createSequentialGroup()
-                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(exitbtnLayout.createSequentialGroup()
+                                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         exitbtnLayout.setVerticalGroup(
-            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         header.add(exitbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -355,7 +362,8 @@ private void mostrarDatosCuenta() {
         jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 420, 160, 20));
 
         logolabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logolabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-blockchain-technology-64.png"))); // NOI18N
+        logolabel.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-blockchain-technology-64.png"))); // NOI18N
         jPanel1.add(logolabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 60, 60));
 
         jLabel17.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
@@ -374,104 +382,108 @@ private void mostrarDatosCuenta() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseClicked
+    private void btnExitTxtMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_btnExitTxtMouseClicked
+    }// GEN-LAST:event_btnExitTxtMouseClicked
 
-    private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseEntered
+    private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseEntered
         exitbtn.setBackground(Color.red);
         btnExitTxt.setForeground(Color.white);
 
-    }//GEN-LAST:event_btnExitTxtMouseEntered
+    }// GEN-LAST:event_btnExitTxtMouseEntered
 
-    private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseExited
+    private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseExited
         exitbtn.setBackground(Color.white);
         btnExitTxt.setForeground(Color.black);
-    }//GEN-LAST:event_btnExitTxtMouseExited
+    }// GEN-LAST:event_btnExitTxtMouseExited
 
-    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_headerMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-    }//GEN-LAST:event_headerMouseDragged
+    }// GEN-LAST:event_headerMouseDragged
 
-    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_headerMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-    }//GEN-LAST:event_headerMousePressed
+    }// GEN-LAST:event_headerMousePressed
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel13MouseClicked
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Depositar ob= new Depositar(idUsuario);
+        Depositar ob = new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
-    }//GEN-LAST:event_jLabel13MouseClicked
+    }// GEN-LAST:event_jLabel13MouseClicked
 
-    private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
+    private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel13MouseEntered
         // TODO add your handling code here:
-        jLabel13.setForeground(new Color(172,153,204));
+        jLabel13.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_jLabel13MouseEntered
+    }// GEN-LAST:event_jLabel13MouseEntered
 
-    private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseExited
+    private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel13MouseExited
         // TODO add your handling code here:
         jLabel13.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
 
-    }//GEN-LAST:event_jLabel13MouseExited
+    }// GEN-LAST:event_jLabel13MouseExited
 
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel14MouseClicked
         Loading11 ob = new Loading11();
         ob.setVisible(true);
         this.dispose();
         Login op = new Login();
         op.setVisible(true);
         ob.setVisible(false);
-    }//GEN-LAST:event_jLabel14MouseClicked
+    }// GEN-LAST:event_jLabel14MouseClicked
 
-    private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
+    private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel14MouseEntered
         // TODO add your handling code here:
-        jLabel14.setForeground(new Color(172,153,204));
+        jLabel14.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_jLabel14MouseEntered
+    }// GEN-LAST:event_jLabel14MouseEntered
 
-    private void jLabel14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseExited
+    private void jLabel14MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel14MouseExited
         // TODO add your handling code here:
         jLabel14.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jLabel14MouseExited
+    }// GEN-LAST:event_jLabel14MouseExited
 
-    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel19MouseClicked
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Retirar ob= new Retirar(idUsuario);
+        Retirar ob = new Retirar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
-    }//GEN-LAST:event_jLabel19MouseClicked
+    }// GEN-LAST:event_jLabel19MouseClicked
 
-    private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered
-        jLabel19.setForeground(new Color(172,153,204));
+    private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel19MouseEntered
+        jLabel19.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_jLabel19MouseEntered
+    }// GEN-LAST:event_jLabel19MouseEntered
 
-    private void jLabel19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseExited
+    private void jLabel19MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel19MouseExited
         jLabel19.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jLabel19MouseExited
+    }// GEN-LAST:event_jLabel19MouseExited
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -480,18 +492,20 @@ private void mostrarDatosCuenta() {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AccountData.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {

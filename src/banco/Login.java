@@ -18,37 +18,42 @@ import looadingPages.Loading1;
 import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
-    
+
     int xMouse, yMouse;
+
     public Login() {
         initComponents();
-        TextPrompt Prueba = new TextPrompt("Email",userTxt);
-        TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
+        TextPrompt Prueba = new TextPrompt("Email", userTxt);
+        TextPrompt Prueba1 = new TextPrompt("Contraseña", passTxt);
         this.setLocationRelativeTo(null);
-        // Agregar un KeyListener al campo de texto passTxt para activar el botón rSButtonGradiente1
+        // Agregar un KeyListener al campo de texto passTxt para activar el botón
+        // rSButtonGradiente1
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
         passTxt.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente1.doClick();
-            }    
-        }
-    });
-        // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente1
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente1.doClick();
+                }
+            }
+        });
+        // Agregar un KeyListener al campo de texto userTxt para activar el botón
+        // rSButtonGradiente1
         userTxt.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente1.doClick();
-            }    
-        }
-    });
-        
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente1.doClick();
+                }
+            }
+        });
+
     }
+
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -123,9 +128,11 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseExited(evt);
             }
@@ -134,34 +141,35 @@ public class Login extends javax.swing.JFrame {
         javax.swing.GroupLayout exitbtnLayout = new javax.swing.GroupLayout(exitbtn);
         exitbtn.setLayout(exitbtnLayout);
         exitbtnLayout.setHorizontalGroup(
-            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exitbtnLayout.createSequentialGroup()
-                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(exitbtnLayout.createSequentialGroup()
+                                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         exitbtnLayout.setVerticalGroup(
-            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerLayout.createSequentialGroup()
-                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 810, Short.MAX_VALUE))
-        );
+                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(headerLayout.createSequentialGroup()
+                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 810, Short.MAX_VALUE)));
         headerLayout.setVerticalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
@@ -179,12 +187,15 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxtMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxtMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxtMouseExited(evt);
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxtMousePressed(evt);
             }
@@ -212,12 +223,15 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 passTxtMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 passTxtMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 passTxtMouseExited(evt);
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 passTxtMousePressed(evt);
             }
@@ -269,127 +283,139 @@ public class Login extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
+    private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_userTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userTxtActionPerformed
+    }// GEN-LAST:event_userTxtActionPerformed
 
-    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_headerMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-    }//GEN-LAST:event_headerMousePressed
+    }// GEN-LAST:event_headerMousePressed
 
-    private void passTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passTxtActionPerformed
+    private void passTxtActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_passTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passTxtActionPerformed
+    }// GEN-LAST:event_passTxtActionPerformed
 
-    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_headerMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-    }//GEN-LAST:event_headerMouseDragged
+    }// GEN-LAST:event_headerMouseDragged
 
-    private void btnExitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseClicked
+    private void btnExitTxtMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_btnExitTxtMouseClicked
+    }// GEN-LAST:event_btnExitTxtMouseClicked
 
-    private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseEntered
+    private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseEntered
         exitbtn.setBackground(Color.red);
-        btnExitTxt.setForeground(Color.white); 
-        
-    }//GEN-LAST:event_btnExitTxtMouseEntered
+        btnExitTxt.setForeground(Color.white);
 
-    private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseExited
+    }// GEN-LAST:event_btnExitTxtMouseEntered
+
+    private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnExitTxtMouseExited
         exitbtn.setBackground(Color.white);
-        btnExitTxt.setForeground(Color.black);        
-    }//GEN-LAST:event_btnExitTxtMouseExited
+        btnExitTxt.setForeground(Color.black);
+    }// GEN-LAST:event_btnExitTxtMouseExited
 
-    private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
-        /*if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
-            userTxt.setText("");
-            userTxt.setForeground(Color.black);
-        }
-        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
-            passTxt.setText("********");
-            passTxt.setForeground(Color.gray);
-        }*/
-    }//GEN-LAST:event_userTxtMousePressed
+    private void userTxtMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_userTxtMousePressed
+        /*
+         * if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
+         * userTxt.setText("");
+         * userTxt.setForeground(Color.black);
+         * }
+         * if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+         * passTxt.setText("********");
+         * passTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_userTxtMousePressed
 
-    private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
-        /*if (String.valueOf(passTxt.getPassword()).equals("********")) {
-            passTxt.setText("");
-            passTxt.setForeground(Color.black);
-        }
-        if (userTxt.getText().isEmpty()) {
-            userTxt.setText("Ingrese su nombre de usuario");
-            userTxt.setForeground(Color.gray);
-        }*/
-    }//GEN-LAST:event_passTxtMousePressed
+    private void passTxtMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_passTxtMousePressed
+        /*
+         * if (String.valueOf(passTxt.getPassword()).equals("********")) {
+         * passTxt.setText("");
+         * passTxt.setForeground(Color.black);
+         * }
+         * if (userTxt.getText().isEmpty()) {
+         * userTxt.setText("Ingrese su nombre de usuario");
+         * userTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_passTxtMousePressed
 
-    private void userTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMouseEntered
-        /*if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
-            userTxt.setText("");
-            userTxt.setForeground(Color.black);
-        }
-        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
-            passTxt.setText("********");
-            passTxt.setForeground(Color.gray);
-        }   */     
-    }//GEN-LAST:event_userTxtMouseEntered
+    private void userTxtMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_userTxtMouseEntered
+        /*
+         * if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
+         * userTxt.setText("");
+         * userTxt.setForeground(Color.black);
+         * }
+         * if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+         * passTxt.setText("********");
+         * passTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_userTxtMouseEntered
 
-    private void userTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMouseExited
-        /*if (userTxt.getText().isEmpty()) {
-            userTxt.setText("Ingrese su nombre de usuario");
-            userTxt.setForeground(Color.gray);
-        }*/
-    }//GEN-LAST:event_userTxtMouseExited
+    private void userTxtMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_userTxtMouseExited
+        /*
+         * if (userTxt.getText().isEmpty()) {
+         * userTxt.setText("Ingrese su nombre de usuario");
+         * userTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_userTxtMouseExited
 
-    private void passTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMouseEntered
-       /* if (String.valueOf(passTxt.getPassword()).equals("********")) {
-            passTxt.setText("");
-            passTxt.setForeground(Color.black);
-        }
-        if (userTxt.getText().isEmpty()) {
-            userTxt.setText("Ingrese su nombre de usuario");
-            userTxt.setForeground(Color.gray);
-        }*/
-    }//GEN-LAST:event_passTxtMouseEntered
+    private void passTxtMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_passTxtMouseEntered
+        /*
+         * if (String.valueOf(passTxt.getPassword()).equals("********")) {
+         * passTxt.setText("");
+         * passTxt.setForeground(Color.black);
+         * }
+         * if (userTxt.getText().isEmpty()) {
+         * userTxt.setText("Ingrese su nombre de usuario");
+         * userTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_passTxtMouseEntered
 
-    private void passTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMouseExited
-        /*if (String.valueOf(passTxt.getPassword()).isEmpty()) {
-            passTxt.setText("********");
-            passTxt.setForeground(Color.gray);
-        } */
-    }//GEN-LAST:event_passTxtMouseExited
+    private void passTxtMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_passTxtMouseExited
+        /*
+         * if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+         * passTxt.setText("********");
+         * passTxt.setForeground(Color.gray);
+         * }
+         */
+    }// GEN-LAST:event_passTxtMouseExited
 
-    private void userTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMouseClicked
+    private void userTxtMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_userTxtMouseClicked
 
-    }//GEN-LAST:event_userTxtMouseClicked
+    }// GEN-LAST:event_userTxtMouseClicked
 
-    private void passTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMouseClicked
+    private void passTxtMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_passTxtMouseClicked
 
-    }//GEN-LAST:event_passTxtMouseClicked
+    }// GEN-LAST:event_passTxtMouseClicked
 
-    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_rSButtonGradiente1ActionPerformed
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
         validar();
         op.setVisible(false);
-    }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
+    }// GEN-LAST:event_rSButtonGradiente1ActionPerformed
+
     private boolean mostrarContrasena = false;
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel2MouseClicked
         mostrarContrasena = !mostrarContrasena; // Cambiar el estado
 
         if (mostrarContrasena) {
@@ -401,25 +427,25 @@ public class Login extends javax.swing.JFrame {
             ImageIcon iconoClickeado = new ImageIcon(getClass().getResource("/img/ver.png"));
             jLabel2.setIcon(iconoClickeado);
         }
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }// GEN-LAST:event_jLabel2MouseClicked
 
-    private void rSButtonGradiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente2ActionPerformed
+    private void rSButtonGradiente2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_rSButtonGradiente2ActionPerformed
         Loading11 ob = new Loading11();
         ob.setVisible(true);
         this.dispose();
-        Register op= new Register();                
+        Register op = new Register();
         op.setVisible(true);
         ob.setVisible(true);
-    }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
+    }// GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
     private boolean validarCampos() {
-        
-    // Verificar que ningún campo esté vacío
+
+        // Verificar que ningún campo esté vacío
         if (userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);
             return false;
         }
 
@@ -427,85 +453,85 @@ public class Login extends javax.swing.JFrame {
         String correo = userTxt.getText();
         if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);
             return false;
         }
 
         // Verificar la longitud de la contraseña
         if (String.valueOf(passTxt.getPassword()).length() > 25) {
             JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);
             return false;
         }
-    // Si todas las validaciones pasan, retornar true
+        // Si todas las validaciones pasan, retornar true
         return true;
-}    
-    
-public void validar() {
-    
-    if (validarCampos()) {
-        ConexionBD con = new ConexionBD();
-        Connection cn = con.Conexion();
-        int resultado = 0;
-        String correo = userTxt.getText();
-        String contrasena = String.valueOf(passTxt.getPassword());
+    }
 
-        String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
+    public void validar() {
 
-        try {
-            try (java.sql.Statement set = cn.createStatement()) {
-                ResultSet resul = set.executeQuery(sql);
-                
-                if (resul.next()) {
-                    String hashedContrasena = resul.getString("contrasena");
-                    if (BCrypt.checkpw(contrasena, hashedContrasena)) {
-                        resultado = 1;
-                        if (resultado == 1) {
-                            int idUsuario = resul.getInt("id");
-                            AccountData ob = new AccountData(idUsuario);
-                            ob.setLocationRelativeTo(null);
-                            ob.setVisible(true);
-                            this.dispose();
+        if (validarCampos()) {
+            ConexionBD con = new ConexionBD();
+            Connection cn = con.Conexion();
+            int resultado = 0;
+            String correo = userTxt.getText();
+            String contrasena = String.valueOf(passTxt.getPassword());
+
+            String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
+
+            try {
+                try (java.sql.Statement set = cn.createStatement()) {
+                    ResultSet resul = set.executeQuery(sql);
+
+                    if (resul.next()) {
+                        String hashedContrasena = resul.getString("contrasena");
+                        if (BCrypt.checkpw(contrasena, hashedContrasena)) {
+                            resultado = 1;
+                            if (resultado == 1) {
+                                int idUsuario = resul.getInt("id");
+                                AccountData ob = new AccountData(idUsuario);
+                                ob.setLocationRelativeTo(null);
+                                ob.setVisible(true);
+                                this.dispose();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+                            int choice = JOptionPane.showOptionDialog(null,
+                                    "¿Qué desea hacer?",
+                                    "Error de inicio de sesión",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    new Object[] { "Volver a intentar", "Crear nueva cuenta" },
+                                    "default");
+                            if (choice == 0) {
+                                // Volver a intentar
+                                userTxt.setText(""); // Limpiar los campos
+                                passTxt.setText("");
+                                Loading11 ob = new Loading11();
+                                ob.setVisible(false);
+                                this.setVisible(true);
+                            } else if (choice == 1) {
+                                Loading ob = new Loading();
+                                ob.setLocationRelativeTo(null);
+                                ob.setVisible(true);
+                                this.dispose();
+                            }
+
                         }
                     } else {
+                        // Usuario no encontrado
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                         int choice = JOptionPane.showOptionDialog(null,
-                                "¿Qué desea hacer?",
-                                "Error de inicio de sesión",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
-                                "default");
-                        if (choice == 0) {
-                            // Volver a intentar
-                            userTxt.setText(""); // Limpiar los campos
-                            passTxt.setText("");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
-                        } else if (choice == 1) {
-                            Loading ob = new Loading();
-                            ob.setLocationRelativeTo(null);
-                            ob.setVisible(true);
-                            this.dispose();
-                        }
-                        
-                    }
-                } else {
-                    // Usuario no encontrado
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
-                    int choice = JOptionPane.showOptionDialog(null,
                                 "¿Qué desea hacer?",
                                 "",
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
                                 null,
-                                new Object[]{"Volver a intentar", "Crear nueva cuenta"},
+                                new Object[] { "Volver a intentar", "Crear nueva cuenta" },
                                 "default");
                         if (choice == 0) {
                             // Volver a intentar
@@ -520,23 +546,27 @@ public void validar() {
                             ob.setVisible(true);
                             this.dispose();
                         }
+                    }
                 }
+                cn.close();
+            } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
             }
-            cn.close();
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
     }
-}
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -545,18 +575,19 @@ public void validar() {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {

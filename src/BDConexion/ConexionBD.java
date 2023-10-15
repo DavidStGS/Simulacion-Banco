@@ -12,7 +12,7 @@ public class ConexionBD {
 public Connection Conexion(){
 try {
 
-    cn=(Connection) DriverManager.getConnection("jdbc:mysql://bancobd.mysql.database.azure.com:3306/bankbd","DavidSGS","24082001Sepulveda");
+    cn=(Connection) DriverManager.getConnection("jdbc:mysql:127.0.0.1:3306/banco","root","");
 }   catch (SQLException e) {
 }
 return cn;
