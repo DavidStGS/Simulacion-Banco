@@ -13,6 +13,8 @@ import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import looadingPages.Loading11;
+import looadingPages.Loading21;
 
 
 /**
@@ -399,11 +401,13 @@ private void mostrarDatosCuenta() {
     }//GEN-LAST:event_headerMousePressed
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         Depositar ob= new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
@@ -420,11 +424,12 @@ private void mostrarDatosCuenta() {
     }//GEN-LAST:event_jLabel13MouseExited
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
-        Login ob= new Login();
+        Loading11 ob = new Loading11();
         ob.setVisible(true);
-        ob.setLocationRelativeTo(null);
         this.dispose();
+        Login op = new Login();
+        op.setVisible(true);
+        ob.setVisible(false);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
@@ -440,10 +445,13 @@ private void mostrarDatosCuenta() {
     }//GEN-LAST:event_jLabel14MouseExited
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         Retirar ob= new Retirar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel19MouseClicked
 
     private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered

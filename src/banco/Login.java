@@ -14,6 +14,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import looadingPages.Loading1;
+import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
     
@@ -379,7 +381,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passTxtMouseClicked
 
     private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         validar();
+        op.setVisible(false);
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
     private boolean mostrarContrasena = false;
 
@@ -398,10 +404,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void rSButtonGradiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente2ActionPerformed
-        Register ob= new Register();
+        Loading11 ob = new Loading11();
         ob.setVisible(true);
-        ob.setLocationRelativeTo(null);
         this.dispose();
+        Register op= new Register();                
+        op.setVisible(true);
+        ob.setVisible(true);
     }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
     private boolean validarCampos() {
@@ -409,6 +417,9 @@ public class Login extends javax.swing.JFrame {
     // Verificar que ningún campo esté vacío
         if (userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
+                            Loading11 ob = new Loading11();
+                            ob.setVisible(false);
+                            this.setVisible(true);
             return false;
         }
 
@@ -416,12 +427,18 @@ public class Login extends javax.swing.JFrame {
         String correo = userTxt.getText();
         if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
+                            Loading11 ob = new Loading11();
+                            ob.setVisible(false);
+                            this.setVisible(true);
             return false;
         }
 
         // Verificar la longitud de la contraseña
         if (String.valueOf(passTxt.getPassword()).length() > 25) {
             JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
+                            Loading11 ob = new Loading11();
+                            ob.setVisible(false);
+                            this.setVisible(true);
             return false;
         }
     // Si todas las validaciones pasan, retornar true
@@ -468,8 +485,11 @@ public void validar() {
                             // Volver a intentar
                             userTxt.setText(""); // Limpiar los campos
                             passTxt.setText("");
+                            Loading11 ob = new Loading11();
+                            ob.setVisible(false);
+                            this.setVisible(true);
                         } else if (choice == 1) {
-                            Register ob = new Register();
+                            Loading ob = new Loading();
                             ob.setLocationRelativeTo(null);
                             ob.setVisible(true);
                             this.dispose();
@@ -491,8 +511,11 @@ public void validar() {
                             // Volver a intentar
                             userTxt.setText(""); // Limpiar los campos
                             passTxt.setText("");
+                            Loading11 ob = new Loading11();
+                            ob.setVisible(false);
+                            this.setVisible(true);
                         } else if (choice == 1) {
-                            Register ob = new Register();
+                            Loading ob = new Loading();
                             ob.setLocationRelativeTo(null);
                             ob.setVisible(true);
                             this.dispose();

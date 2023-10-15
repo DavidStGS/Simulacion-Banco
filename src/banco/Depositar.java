@@ -18,6 +18,8 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import looadingPages.Loading11;
+import looadingPages.Loading21;
 
 
 /**
@@ -117,20 +119,27 @@ public class Depositar extends javax.swing.JFrame {
 }
 private void Depositar() {
         try {
-            
             double monto = Double.parseDouble(montoTxt.getText());
             double saldoActual = obtenerSaldo();
             String sql = "UPDATE cuentas_bancarias SET saldo = saldo + ? WHERE id_usuario = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setDouble(1, monto); // Establece el monto
             pst.setInt(2, idUsuario);
+            
             int filasAfectadas = pst.executeUpdate();
+            
             if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(null, "Depósito exitoso.");
-            montoTxt.setText("");// Actualiza los datos mostrados después del depósito
+                JOptionPane.showMessageDialog(null, "Depósito exitoso.");
+                montoTxt.setText("");
+                Loading11 ob = new Loading11();
+                ob.setVisible(false);
+                this.setVisible(true);// Actualiza los datos mostrados después del depósito
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo realizar el depósito.");
                 montoTxt.setText("");
+                Loading11 ob = new Loading11();
+                ob.setVisible(false);
+                this.setVisible(true);                
             }
         } catch (HeadlessException | NumberFormatException | SQLException e) {
         }
@@ -441,11 +450,13 @@ private void Depositar() {
     }//GEN-LAST:event_headerMousePressed
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         Retirar ob= new Retirar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
@@ -461,10 +472,12 @@ private void Depositar() {
     }//GEN-LAST:event_jLabel14MouseExited
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-        Login ob= new Login();
+        Loading11 ob = new Loading11();
         ob.setVisible(true);
         this.dispose();
+        Login op = new Login();
+        op.setVisible(true);
+        ob.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
@@ -517,6 +530,9 @@ private void Depositar() {
     }//GEN-LAST:event_montoTxtActionPerformed
 
     private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+        Loading11 ob = new Loading11();
+        ob.setVisible(true);
+        this.setVisible(false);
         Depositar();
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
 private double obtenerSaldo() {
@@ -535,10 +551,13 @@ private double obtenerSaldo() {
     return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
 }
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         AccountData ob= new AccountData(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered

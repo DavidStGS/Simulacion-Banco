@@ -18,6 +18,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import looadingPages.Loading11;
 
 
 /**
@@ -116,6 +117,7 @@ public class Retirar extends javax.swing.JFrame {
         }
 }
 private void Retirar() {
+    
         try {
         double monto = Double.parseDouble(montoTxt.getText());
         double saldoActual = obtenerSaldo(); // Obtener el saldo actual de la cuenta
@@ -129,14 +131,23 @@ private void Retirar() {
             if (filasAfectadas > 0) {
                 JOptionPane.showMessageDialog(null, "Retiro exitoso.");
                 montoTxt.setText("");
+                Loading11 ob = new Loading11();
+                ob.setVisible(false);
+                this.setVisible(true);
                 // Actualizar los datos mostrados después del retiro
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo realizar el retiro."); 
                 montoTxt.setText("");
+                Loading11 ob = new Loading11();
+                ob.setVisible(false);
+                this.setVisible(true);  
             }
         } else {
             JOptionPane.showMessageDialog(null, "Saldo insuficiente."); 
             montoTxt.setText("");
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);              
         }
         } catch (HeadlessException | NumberFormatException | SQLException e) {
         }
@@ -461,11 +472,13 @@ private double obtenerSaldo() {
     }//GEN-LAST:event_headerMousePressed
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         Depositar ob= new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
@@ -481,10 +494,12 @@ private double obtenerSaldo() {
     }//GEN-LAST:event_jLabel14MouseExited
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         Login ob= new Login();
         ob.setVisible(true);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
@@ -537,14 +552,20 @@ private double obtenerSaldo() {
     }//GEN-LAST:event_montoTxtActionPerformed
 
     private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+        Loading11 ob = new Loading11();
+        ob.setVisible(true);
+        this.setVisible(false);
         Retirar();
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.dispose();
         AccountData ob= new AccountData(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
-        this.dispose();
+        op.setVisible(false);
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered

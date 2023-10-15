@@ -18,6 +18,8 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import looadingPages.Loading11;
+import looadingPages.Loading21;
 
 public class Register extends javax.swing.JFrame {
     
@@ -555,10 +557,13 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_passTxtMouseClicked
 
     private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
-        Login ob= new Login();
-        ob.setLocationRelativeTo(null);
+        Loading11 ob = new Loading11();
         ob.setVisible(true);
         this.dispose();
+        Login op = new Login();
+        op.setVisible(true);
+        op.setLocationRelativeTo(null);
+        ob.setVisible(false);
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
     
     private int obtenerCodigoCiudadPorNombre(String nombreCiudad) {
@@ -590,6 +595,9 @@ public class Register extends javax.swing.JFrame {
     if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty() ||
             userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
         JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
+        Loading11 ob = new Loading11();
+        ob.setVisible(false);
+        this.setVisible(true);
         return false;
     }
     
@@ -597,12 +605,18 @@ public class Register extends javax.swing.JFrame {
     String correo = userTxt.getText();
     if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
         JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
+        Loading11 ob = new Loading11();
+        ob.setVisible(false);
+        this.setVisible(true);
         return false;
     }
     
     // Verificar la longitud de la contraseña
     if (String.valueOf(passTxt.getPassword()).length() > 25) {
         JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
+        Loading11 ob = new Loading11();
+        ob.setVisible(false);
+        this.setVisible(true);
         return false;
     }
     
@@ -610,10 +624,17 @@ public class Register extends javax.swing.JFrame {
     String apellidos = userTxt2.getText();
     if (!nombre.matches("^[a-zA-Z ]+$") || !apellidos.matches("^[a-zA-Z ]+$")) {
         JOptionPane.showMessageDialog(null, "Los campos de nombre y apellidos solo deben contener letras.");
+        Loading11 ob = new Loading11();
+        ob.setVisible(false);
+        this.setVisible(true);
         return false;
+        
     }
         if (String.valueOf(userTxt3.getText()).length() > 10) {
         JOptionPane.showMessageDialog(null, "La cedula no tiene un formato valido.");
+        Loading11 ob = new Loading11();
+        ob.setVisible(false);
+        this.setVisible(true);
         return false;
     }
     // Si todas las validaciones pasan, retornar true
@@ -644,21 +665,29 @@ public class Register extends javax.swing.JFrame {
                 
                 if (filasAfectadas > 0) {
                     JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-                    Login ob = new Login();
-                    ob.setVisible(true);
+                    Loading11 ob = new Loading11();
+                    ob.setVisible(false);
+                    this.setVisible(true);
+                    Login op = new Login();
+                    op.setVisible(true);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
+                    Loading11 ob = new Loading11();
+                    ob.setVisible(false);
+                    this.setVisible(true);
                 }
             }
             cn.close();
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);
             System.out.print("Error al registrar usuario: " + e.getMessage());
         }
     }
 }
-
 
 
     private void userTxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxt1MouseClicked
@@ -702,6 +731,9 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_userTxt2ActionPerformed
 
     private void rSButtonGradiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente2ActionPerformed
+        Loading11 op = new Loading11();
+        op.setVisible(true);
+        this.setVisible(false);
         registrarUsuario();
     }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
@@ -729,6 +761,7 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSComboBox1ActionPerformed
     private boolean mostrarContrasena = false;
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         mostrarContrasena = !mostrarContrasena; // Cambiar el estado
 
