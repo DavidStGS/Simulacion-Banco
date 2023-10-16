@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
+import JframesEmergentes.DepositarRetirar.DepositoDeng;
+import JframesEmergentes.DepositarRetirar.DepositoPass;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
@@ -132,17 +134,19 @@ public class Depositar extends javax.swing.JFrame {
             int filasAfectadas = pst.executeUpdate();
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Depósito exitoso.");
-                montoTxt.setText("");
                 Loading11 ob = new Loading11();
-                ob.setVisible(false);
-                this.setVisible(true);// Actualiza los datos mostrados después del depósito
+                ob.setVisible(true);
+                DepositoPass op = new DepositoPass(idUsuario);
+                op.setVisible(true);
+                montoTxt.setText("");
+                ob.setVisible(false);// Actualiza los datos mostrados después del depósito
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo realizar el depósito.");
-                montoTxt.setText("");
                 Loading11 ob = new Loading11();
+                ob.setVisible(true);
+                DepositoDeng op = new DepositoDeng(idUsuario);
+                op.setVisible(true);
+                montoTxt.setText("");
                 ob.setVisible(false);
-                this.setVisible(true);
             }
         } catch (HeadlessException | NumberFormatException | SQLException e) {
         }

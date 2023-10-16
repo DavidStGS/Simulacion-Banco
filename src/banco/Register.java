@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import JframesEmergentes.CamposObligatorios;
+import JframesEmergentes.EmailNoValido;
+import JframesEmergentes.ErrorID;
+import JframesEmergentes.ErrorPass;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
@@ -19,7 +23,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import looadingPages.Loading11;
-import looadingPages.Loading21;
+import JframesEmergentes.RegisterUsers.UserDeng;
+import JframesEmergentes.RegisterUsers.Userpass;
 
 public class Register extends javax.swing.JFrame {
 
@@ -34,7 +39,7 @@ public class Register extends javax.swing.JFrame {
         TextPrompt Prueba = new TextPrompt("Email", userTxt);
         TextPrompt Prueba1 = new TextPrompt("Contraseña", passTxt);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
-
+        
         ((AbstractDocument) userTxt3.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr)
@@ -114,7 +119,7 @@ public class Register extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -200,11 +205,9 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseExited(evt);
             }
@@ -213,30 +216,30 @@ public class Register extends javax.swing.JFrame {
         javax.swing.GroupLayout exitbtnLayout = new javax.swing.GroupLayout(exitbtn);
         exitbtn.setLayout(exitbtnLayout);
         exitbtnLayout.setHorizontalGroup(
-                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(exitbtnLayout.createSequentialGroup()
-                                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)));
+            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(exitbtnLayout.createSequentialGroup()
+                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
         exitbtnLayout.setVerticalGroup(
-                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(headerLayout.createSequentialGroup()
-                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 810, Short.MAX_VALUE)));
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 810, Short.MAX_VALUE))
+        );
         headerLayout.setVerticalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
@@ -255,15 +258,12 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxtMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxtMousePressed(evt);
             }
@@ -291,15 +291,12 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 passTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 passTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 passTxtMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 passTxtMousePressed(evt);
             }
@@ -336,15 +333,12 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxt1MouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxt1MouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxt1MouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxt1MousePressed(evt);
             }
@@ -370,15 +364,12 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxt2MouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxt2MouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxt2MouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxt2MousePressed(evt);
             }
@@ -407,8 +398,7 @@ public class Register extends javax.swing.JFrame {
         });
         jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 130, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(
-                getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         UserLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -436,15 +426,12 @@ public class Register extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxt3MouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxt3MouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxt3MouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxt3MousePressed(evt);
             }
@@ -471,12 +458,13 @@ public class Register extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -622,7 +610,6 @@ public class Register extends javax.swing.JFrame {
             cn.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener código de ciudad: " + e.getMessage());
-            System.out.print("Error al obtener código de ciudad: " + e.getMessage());
         }
 
         return codigoCiudad;
@@ -632,29 +619,23 @@ public class Register extends javax.swing.JFrame {
         // Verificar que ningún campo esté vacío
         if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty() ||
                 userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            CamposObligatorios op= new CamposObligatorios();
+            op.setVisible(true);
             return false;
         }
 
         // Verificar el formato del correo electrónico
         String correo = userTxt.getText();
         if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            EmailNoValido op= new EmailNoValido();
+            op.setVisible(true);
             return false;
         }
 
         // Verificar la longitud de la contraseña
         if (String.valueOf(passTxt.getPassword()).length() > 25) {
-            JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            ErrorPass op= new ErrorPass();
+            op.setVisible(true);            
             return false;
         }
 
@@ -666,13 +647,11 @@ public class Register extends javax.swing.JFrame {
             ob.setVisible(false);
             this.setVisible(true);
             return false;
-
         }
+        
         if (String.valueOf(userTxt3.getText()).length() > 10) {
-            JOptionPane.showMessageDialog(null, "La cedula no tiene un formato valido.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            ErrorID op= new ErrorID();
+            op.setVisible(true);  
             return false;
         }
         // Si todas las validaciones pasan, retornar true
@@ -705,27 +684,18 @@ public class Register extends javax.swing.JFrame {
                     int filasAfectadas = set.executeUpdate(sql);
 
                     if (filasAfectadas > 0) {
-                        JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-                        Loading11 ob = new Loading11();
-                        ob.setVisible(false);
-                        this.setVisible(true);
-                        Login op = new Login();
-                        op.setVisible(true);
+                        Userpass ob= new Userpass();
+                        ob.setVisible(true);
                         this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
-                        Loading11 ob = new Loading11();
-                        ob.setVisible(false);
-                        this.setVisible(true);
+                        UserDeng op= new UserDeng();
+                        op.setVisible(true);    
                     }
                 }
                 cn.close();
             } catch (HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
-                Loading11 ob = new Loading11();
-                ob.setVisible(false);
-                this.setVisible(true);
-                System.out.print("Error al registrar usuario: " + e.getMessage());
+                    UserDeng op= new UserDeng();
+                    op.setVisible(true);    
             }
         }
     }

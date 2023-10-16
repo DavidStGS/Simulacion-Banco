@@ -8,6 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
+import JframesEmergentes.DepositarRetirar.DepositoPass;
+import JframesEmergentes.DepositarRetirar.MontoNull;
+import JframesEmergentes.DepositarRetirar.RetiroDeng;
+import JframesEmergentes.DepositarRetirar.RetiroPass;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
@@ -132,25 +136,28 @@ public class Retirar extends javax.swing.JFrame {
 
                 int filasAfectadas = pst.executeUpdate();
                 if (filasAfectadas > 0) {
-                    JOptionPane.showMessageDialog(null, "Retiro exitoso.");
-                    montoTxt.setText("");
-                    Loading11 ob = new Loading11();
-                    ob.setVisible(false);
-                    this.setVisible(true);
+                Loading11 ob = new Loading11();
+                ob.setVisible(true);
+                RetiroPass op = new RetiroPass(idUsuario);
+                op.setVisible(true);
+                montoTxt.setText("");
+                ob.setVisible(false);
                     // Actualizar los datos mostrados después del retiro
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo realizar el retiro.");
-                    montoTxt.setText("");
-                    Loading11 ob = new Loading11();
-                    ob.setVisible(false);
-                    this.setVisible(true);
+            } else {
+                Loading11 ob = new Loading11();
+                ob.setVisible(true);
+                RetiroDeng op = new RetiroDeng(idUsuario);
+                op.setVisible(true);
+                montoTxt.setText("");
+                ob.setVisible(false);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Saldo insuficiente.");
-                montoTxt.setText("");
                 Loading11 ob = new Loading11();
+                ob.setVisible(true);
+                MontoNull op = new MontoNull(idUsuario);
+                op.setVisible(true);
+                montoTxt.setText("");
                 ob.setVisible(false);
-                this.setVisible(true);
             }
         } catch (HeadlessException | NumberFormatException | SQLException e) {
         }

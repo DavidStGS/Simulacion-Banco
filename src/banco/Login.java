@@ -7,14 +7,16 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
-import java.awt.Cursor;
+import JframesEmergentes.RegisterUsers.CamposObligatoriosLog;
+import JframesEmergentes.RegisterUsers.EmailNoValidoLog;
+import JframesEmergentes.RegisterUsers.ErrorPassLog;
+import JframesEmergentes.RegisterUsers.UserNoValido;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
-import looadingPages.Loading1;
 import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
@@ -442,29 +444,23 @@ public class Login extends javax.swing.JFrame {
 
         // Verificar que ningún campo esté vacío
         if (userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            CamposObligatoriosLog op = new CamposObligatoriosLog();
+            op.setVisible(true);
             return false;
         }
 
         // Verificar el formato del correo electrónico
         String correo = userTxt.getText();
         if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            EmailNoValidoLog op = new EmailNoValidoLog();
+            op.setVisible(true);
             return false;
         }
 
         // Verificar la longitud de la contraseña
         if (String.valueOf(passTxt.getPassword()).length() > 25) {
-            JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
+            ErrorPassLog op = new ErrorPassLog();
+            op.setVisible(true);
             return false;
         }
         // Si todas las validaciones pasan, retornar true
@@ -492,21 +488,23 @@ public class Login extends javax.swing.JFrame {
                             resultado = 1;
                             if (resultado == 1) {
                                 int idUsuario = resul.getInt("id");
+                                Loading11 oa = new Loading11();
+                                oa.setVisible(true);
                                 AccountData ob = new AccountData(idUsuario);
                                 ob.setLocationRelativeTo(null);
                                 ob.setVisible(true);
                                 this.dispose();
+                                oa.setVisible(false);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
-                            int choice = JOptionPane.showOptionDialog(null,
-                                    "¿Qué desea hacer?",
-                                    "Error de inicio de sesión",
-                                    JOptionPane.YES_NO_OPTION,
-                                    JOptionPane.QUESTION_MESSAGE,
-                                    null,
-                                    new Object[] { "Volver a intentar", "Crear nueva cuenta" },
-                                    "default");
+                            Loading11 oa = new Loading11();
+                            oa.setVisible(true);
+                            UserNoValido op = new UserNoValido();
+                            op.setVisible(true);
+                            oa.setVisible(false);
+                            this.dispose();
+                            int choice = 0;
+
                             if (choice == 0) {
                                 // Volver a intentar
                                 userTxt.setText(""); // Limpiar los campos
@@ -520,19 +518,15 @@ public class Login extends javax.swing.JFrame {
                                 ob.setVisible(true);
                                 this.dispose();
                             }
-
                         }
                     } else {
-                        // Usuario no encontrado
-                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
-                        int choice = JOptionPane.showOptionDialog(null,
-                                "¿Qué desea hacer?",
-                                "",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                new Object[] { "Volver a intentar", "Crear nueva cuenta" },
-                                "default");
+                        Loading11 oa = new Loading11();
+                        oa.setVisible(true);
+                        UserNoValido op = new UserNoValido();
+                        op.setVisible(true);
+                        oa.setVisible(false);
+                        this.dispose();
+                        int choice = 0;
                         if (choice == 0) {
                             // Volver a intentar
                             userTxt.setText(""); // Limpiar los campos
