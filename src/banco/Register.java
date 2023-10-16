@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import JframesEmergentes.CamposObligatorios;
+import JframesEmergentes.EmailNoValido;
+import JframesEmergentes.ErrorID;
+import JframesEmergentes.ErrorPass;
+import JframesEmergentes.RegisterUsers.UserDeng;
+import JframesEmergentes.RegisterUsers.Userpass;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
@@ -594,29 +600,23 @@ public class Register extends javax.swing.JFrame {
     // Verificar que ningún campo esté vacío
     if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty() ||
             userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-        Loading11 ob = new Loading11();
-        ob.setVisible(false);
-        this.setVisible(true);
+        CamposObligatorios op= new CamposObligatorios();
+        op.setVisible(true);
         return false;
     }
     
     // Verificar el formato del correo electrónico
     String correo = userTxt.getText();
     if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        JOptionPane.showMessageDialog(null, "El correo electrónico no tiene un formato válido.");
-        Loading11 ob = new Loading11();
-        ob.setVisible(false);
-        this.setVisible(true);
+        EmailNoValido op= new EmailNoValido();
+        op.setVisible(true);
         return false;
     }
     
     // Verificar la longitud de la contraseña
     if (String.valueOf(passTxt.getPassword()).length() > 25) {
-        JOptionPane.showMessageDialog(null, "La contraseña no puede tener más de 25 caracteres.");
-        Loading11 ob = new Loading11();
-        ob.setVisible(false);
-        this.setVisible(true);
+        ErrorPass op= new ErrorPass();
+        op.setVisible(true);    
         return false;
     }
     
@@ -631,10 +631,8 @@ public class Register extends javax.swing.JFrame {
         
     }
         if (String.valueOf(userTxt3.getText()).length() > 10) {
-        JOptionPane.showMessageDialog(null, "La cedula no tiene un formato valido.");
-        Loading11 ob = new Loading11();
-        ob.setVisible(false);
-        this.setVisible(true);
+            ErrorID op= new ErrorID();
+            op.setVisible(true);  
         return false;
     }
     // Si todas las validaciones pasan, retornar true
@@ -664,27 +662,18 @@ public class Register extends javax.swing.JFrame {
                 int filasAfectadas = set.executeUpdate(sql);
                 
                 if (filasAfectadas > 0) {
-                    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-                    Loading11 ob = new Loading11();
-                    ob.setVisible(false);
-                    this.setVisible(true);
-                    Login op = new Login();
-                    op.setVisible(true);
+                    Userpass ob= new Userpass();
+                    ob.setVisible(true);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
-                    Loading11 ob = new Loading11();
-                    ob.setVisible(false);
-                    this.setVisible(true);
+                    UserDeng op= new UserDeng();
+                    op.setVisible(true); 
                 }
             }
             cn.close();
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
-            Loading11 ob = new Loading11();
-            ob.setVisible(false);
-            this.setVisible(true);
-            System.out.print("Error al registrar usuario: " + e.getMessage());
+                UserDeng op= new UserDeng();
+                op.setVisible(true);   
         }
     }
 }
