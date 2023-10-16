@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import BDConexion.ConexionBD; // Asegúrate de que este sea el import correcto para tu clase de conexión a la base de datos.
-import JframesEmergentes.DepositarRetirar.DepositoPass;
 import JframesEmergentes.DepositarRetirar.MontoNull;
 import JframesEmergentes.DepositarRetirar.RetiroDeng;
 import JframesEmergentes.DepositarRetirar.RetiroPass;
@@ -17,7 +16,6 @@ import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -135,6 +133,7 @@ public class Retirar extends javax.swing.JFrame {
                 pst.setInt(2, idUsuario);
 
                 int filasAfectadas = pst.executeUpdate();
+                
                 if (filasAfectadas > 0) {
                 Loading11 ob = new Loading11();
                 ob.setVisible(true);

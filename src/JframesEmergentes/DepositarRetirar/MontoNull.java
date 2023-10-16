@@ -27,12 +27,6 @@ public class MontoNull extends javax.swing.JFrame {
         op.setLocationRelativeTo(null);
         op.setEnabled(false);
     }
-
-    private MontoNull() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +54,7 @@ public class MontoNull extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Saldo insuficiente.");
+        jLabel1.setText("Retiro exitoso.");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 150, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -80,9 +74,9 @@ public class MontoNull extends javax.swing.JFrame {
                 rSButtonGradiente2ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 60, 20));
+        jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 60, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 100));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 100));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
