@@ -60,7 +60,7 @@ public class MontoNull extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Retiro exitoso.");
+        jLabel1.setText("Monto Insuficiente.");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 150, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));

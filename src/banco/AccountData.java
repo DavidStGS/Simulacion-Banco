@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import looadingPages.Loading11;
-import looadingPages.Loading21;
 
 
 /**
@@ -37,71 +36,77 @@ public class AccountData extends javax.swing.JFrame {
     }
     
     public int obtenerCodigoSucursal(int idUsuario) {
-    try {
-        String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-            return rs.getInt("codigo_sucursala");
+        try {
+            String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
+            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+                pst.setInt(1, idUsuario);
+                try (ResultSet rs = pst.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt("codigo_sucursal");
+                    }
+                }
+            }
+        } catch (SQLException e) { // Imprimir el error para debug
         }
-    } catch (SQLException e) {
-    }
-    return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
+        return -1;
 }
+
 
     
     public String obtenerNombreCiudad(int codigoSucursal) {
-    try {
-        String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, codigoSucursal);
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-            return rs.getString("nombre_ciudad");
-        }
-    } catch (SQLException e) {
-    }
-    return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
+        try {
+            String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
+            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+                pst.setInt(1, codigoSucursal);
+                try (ResultSet rs = pst.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("nombre_ciudad");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            // Imprimir el error para debug
+            }
+        return "";
 }
 
-private void mostrarDatosCuenta() {
-    try {
-        String sql = "SELECT cb.*, u.identificacion " +
-                     "FROM cuentas_bancarias cb " +
-                     "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                     "WHERE cb.id_usuario=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            String nombreTitular = rs.getString("nombre_titular");
-            String apellidosTitular = rs.getString("apellidos_titular");
-            String numeroCuenta = rs.getString("numero_cuenta");
-            String tipoCuenta = rs.getString("tipo_cuenta");
-            int saldo = rs.getInt("saldo");
-            String ciudad = rs.getString("codigo_sucursal");
-            int codigoSucursal = rs.getInt("codigo_sucursal");
-            String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
+    private void mostrarDatosCuenta() {
+        try {
+            String sql = "SELECT cb.*, u.identificacion, s.nombre_ciudad " +
+                         "FROM cuentas_bancarias cb " +
+                         "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
+                         "INNER JOIN sucursales s ON cb.codigo_sucursal = s.codigo_ciudad " +
+                         "WHERE cb.id_usuario=?";
+            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+                pst.setInt(1, idUsuario);
+                try (ResultSet rs = pst.executeQuery()) {
+                    if (rs.next()) {
+                        String nombreTitular = rs.getString("nombre_titular");
+                        String apellidosTitular = rs.getString("apellidos_titular");
+                        String numeroCuenta = rs.getString("numero_cuenta");
+                        String tipoCuenta = rs.getString("tipo_cuenta");
+                        int saldo = rs.getInt("saldo");
+                        String nombreCiudad = rs.getString("nombre_ciudad");
+                        String identificacion = rs.getString("identificacion");
 
-            String identificacion = rs.getString("identificacion"); // Obtener la identificacion
-            NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
-            String saldoFormateado = formatoSaldo.format((int)saldo);
-            
-            jLabel1.setText(nombreTitular);
-            jLabel2.setText(apellidosTitular);
-            jLabel3.setText(numeroCuenta);
-            jLabel4.setText(tipoCuenta);
-            jLabel5.setText("$" + String.valueOf(saldoFormateado));
-            jLabel16.setText(nombreCiudad);
-            jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
-        }
-    } catch (SQLException e) {
-    }
+                        NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
+                        String saldoFormateado = formatoSaldo.format(saldo);
+
+                        jLabel1.setText(nombreTitular);
+                        jLabel2.setText(apellidosTitular);
+                        jLabel3.setText(numeroCuenta);
+                        jLabel4.setText(tipoCuenta);
+                        jLabel5.setText("$" + saldoFormateado);
+                        jLabel16.setText(nombreCiudad);
+                        jLabel18.setText(identificacion);
+                    }
+                }
+            }
+        } catch (SQLException e) { // Imprimir el error para debug
+            }
 }
+
 
 
     public AccountData() {

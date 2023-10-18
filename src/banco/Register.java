@@ -13,7 +13,6 @@ import JframesEmergentes.ErrorID;
 import JframesEmergentes.ErrorPass;
 import JframesEmergentes.RegisterUsers.UserDeng;
 import JframesEmergentes.RegisterUsers.Userpass;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.awt.event.KeyEvent;
@@ -25,7 +24,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import looadingPages.Loading11;
-import looadingPages.Loading21;
 
 public class Register extends javax.swing.JFrame {
     
@@ -573,29 +571,26 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
     
     private int obtenerCodigoCiudadPorNombre(String nombreCiudad) {
-    int codigoCiudad = -1; // Valor por defecto si no se encuentra la ciudad
+        int codigoCiudad = -1;
 
-    ConexionBD con = new ConexionBD();
-    Connection cn = con.Conexion();
-
-    try {
-        String sql = "SELECT codigo_ciudad FROM sucursales WHERE nombre_ciudad = ?";
-        try (PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql)) {
-            ps.setString(1, nombreCiudad);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    codigoCiudad = rs.getInt("codigo_ciudad");
+        try (Connection cn = new ConexionBD().Conexion()) {
+            String sql = "SELECT codigo_ciudad FROM sucursales WHERE nombre_ciudad = ?";
+            try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                ps.setString(1, nombreCiudad);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        codigoCiudad = rs.getInt("codigo_ciudad");
+                    }
                 }
             }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener código de ciudad: " + e.getMessage());
+            System.out.print("Error al obtener código de ciudad: " + e.getMessage());
         }
-        cn.close();
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al obtener código de ciudad: " + e.getMessage());
-        System.out.print("Error al obtener código de ciudad: " + e.getMessage());
-    }
 
     return codigoCiudad;
 }
+
     private boolean validarCampos() {
     // Verificar que ningún campo esté vacío
     if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty() ||
@@ -639,44 +634,48 @@ public class Register extends javax.swing.JFrame {
     return true;
 }
     private void registrarUsuario() {
-    if (validarCampos()) {
-        ConexionBD con = new ConexionBD();
-        Connection cn = con.Conexion();
-        String nombre = userTxt1.getText();
-        String apellidos = userTxt2.getText();
-        String cedula = String.valueOf(userTxt3.getText());
-        String correo = userTxt.getText();
-        String contrasena = new String(passTxt.getPassword()); // Obtener la contraseña como String
+        if (validarCampos()) {
+            String nombre = userTxt1.getText();
+            String apellidos = userTxt2.getText();
+            String cedula = userTxt3.getText();
+            String correo = userTxt.getText();
+            String contrasena = new String(passTxt.getPassword());
 
-        // Encriptar la contraseña utilizando BCrypt
-        String hashedContrasena = BCrypt.hashpw(contrasena, BCrypt.gensalt());
+            String hashedContrasena = BCrypt.hashpw(contrasena, BCrypt.gensalt());
 
-        String ciudadSeleccionada = (String) rSComboBox1.getSelectedItem(); // Obtener la ciudad seleccionada
-        int codigoCiudad = obtenerCodigoCiudadPorNombre(ciudadSeleccionada);
+            String ciudadSeleccionada = (String) rSComboBox1.getSelectedItem();
+            int codigoCiudad = obtenerCodigoCiudadPorNombre(ciudadSeleccionada);
 
-        String sql = "INSERT INTO usuarios (identificacion, nombre, apellidos, correo_electronico, contrasena, codigo_sucursal) " +
-                     "VALUES ('" + cedula + "','" + nombre + "', '" + apellidos + "', '" + correo + "', '" + hashedContrasena + "', " + codigoCiudad + ")";
+            try (Connection cn = new ConexionBD().Conexion()) {
+                String sql = "INSERT INTO usuarios (identificacion, nombre, apellidos, correo_electronico, contrasena, codigo_sucursal) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                    ps.setString(1, cedula);
+                    ps.setString(2, nombre);
+                    ps.setString(3, apellidos);
+                    ps.setString(4, correo);
+                    ps.setString(5, hashedContrasena);
+                    ps.setInt(6, codigoCiudad);
 
-        try {
-            try (java.sql.Statement set = cn.createStatement()) {
-                int filasAfectadas = set.executeUpdate(sql);
-                
-                if (filasAfectadas > 0) {
-                    Userpass ob= new Userpass();
-                    ob.setVisible(true);
-                    this.dispose();
-                } else {
-                    UserDeng op= new UserDeng();
-                    op.setVisible(true); 
+                    int filasAfectadas = ps.executeUpdate();
+
+                    if (filasAfectadas > 0) {
+                        Userpass ob= new Userpass();
+                        ob.setVisible(true);
+                        this.dispose();
+                    } else {
+                        UserDeng op= new UserDeng();
+                        op.setVisible(true);
+                    }
                 }
-            }
-            cn.close();
-        } catch (HeadlessException | SQLException e) {
+            } catch (SQLException e) {
                 UserDeng op= new UserDeng();
-                op.setVisible(true);   
+                op.setVisible(true);
+            }
         }
-    }
 }
+
+
 
 
     private void userTxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxt1MouseClicked
@@ -767,26 +766,21 @@ public class Register extends javax.swing.JFrame {
 
 // Agregar un método para llenar el ComboBox de sucursales
     private void llenarComboBoxSucursales() {
-        
         rSComboBox1.removeAllItems();
-        ConexionBD con = new ConexionBD();
-        Connection cn = con.Conexion();
-        
-        try {
+
+        try (Connection cn = new ConexionBD().Conexion()) {
             String sql = "SELECT nombre_ciudad FROM sucursales";
-            try (java.sql.Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-                
+            try (PreparedStatement st = cn.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     String nombreCiudad = rs.getString("nombre_ciudad");
                     rSComboBox1.addItem(nombreCiudad);
                 }
-                
             }
-            cn.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al llenar ComboBox de sucursales: " + e.getMessage());
         }
-    }
+}
+
     
     /**
      * @param args the command line arguments

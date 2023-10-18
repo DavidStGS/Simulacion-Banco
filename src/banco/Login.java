@@ -10,7 +10,6 @@ import BCrypt.BCrypt;
 import JframesEmergentes.RegisterUsers.EmailNoValidoLog;
 import JframesEmergentes.RegisterUsers.ErrorPassLog;
 import JframesEmergentes.RegisterUsers.UserNoValido;
-import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -18,7 +17,6 @@ import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
-import looadingPages.Loading1;
 import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
@@ -446,59 +444,35 @@ public class Login extends javax.swing.JFrame {
 }    
     
     public void validar() {
-
         if (validarCampos()) {
             ConexionBD con = new ConexionBD();
-            Connection cn = con.Conexion();
-            int resultado = 0;
-            String correo = userTxt.getText();
-            String contrasena = String.valueOf(passTxt.getPassword());
+            try (Connection cn = con.Conexion()) {
+                String correo = userTxt.getText();
+                String contrasena = String.valueOf(passTxt.getPassword());
+                String sql = "SELECT id, contrasena FROM usuarios WHERE correo_electronico=?";
 
-            String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
-
-            try {
-                try (java.sql.Statement set = cn.createStatement()) {
-                    ResultSet resul = set.executeQuery(sql);
+                try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                    ps.setString(1, correo);
+                    ResultSet resul = ps.executeQuery();
 
                     if (resul.next()) {
                         String hashedContrasena = resul.getString("contrasena");
                         if (BCrypt.checkpw(contrasena, hashedContrasena)) {
-                            resultado = 1;
-                            if (resultado == 1) {
-                                int idUsuario = resul.getInt("id");
-                                Loading11 oa = new Loading11();
-                                oa.setVisible(true);
-                                registrarInicioSesion(idUsuario);
-                                AccountData ob = new AccountData(idUsuario);
-                                ob.setLocationRelativeTo(null);
-                                ob.setVisible(true);
-                                this.dispose();
-                                oa.setVisible(false);
-                            }
+                            int idUsuario = resul.getInt("id");
+                            Loading11 oa = new Loading11();
+                            oa.setVisible(true);
+                            registrarInicioSesion(cn, idUsuario);
+                            AccountData ob = new AccountData(idUsuario);
+                            ob.setLocationRelativeTo(null);
+                            ob.setVisible(true);
+                            this.dispose();
+                            oa.setVisible(false);
                         } else {
                             Loading11 oa = new Loading11();
                             oa.setVisible(true);
                             UserNoValido op = new UserNoValido();
                             op.setVisible(true);
                             oa.setVisible(false);
-                            this.dispose();
-                            int choice = 0;
-                            
-                            if (choice == 0) {
-                                // Volver a intentar
-                                userTxt.setText(""); // Limpiar los campos
-                                passTxt.setText("");
-                                Loading11 ob = new Loading11();
-                                ob.setVisible(false);
-                                this.setVisible(true);
-                                
-                            } else if (choice == 1) {
-                                Loading ob = new Loading();
-                                ob.setLocationRelativeTo(null);
-                                ob.setVisible(true);
-                                this.dispose();
-                            }
-
                         }
                     } else {
                         Loading11 oa = new Loading11();
@@ -506,50 +480,33 @@ public class Login extends javax.swing.JFrame {
                         UserNoValido op = new UserNoValido();
                         op.setVisible(true);
                         oa.setVisible(false);
-                        this.dispose();
-                        int choice = 0;
-                            if (choice == 0) {
-                                // Volver a intentar
-                                userTxt.setText(""); // Limpiar los campos
-                                passTxt.setText("");
-                                Loading11 ob = new Loading11();
-                                ob.setVisible(false);
-                                this.setVisible(true);
-                            } else if (choice == 1) {
-                                Loading ob = new Loading();
-                                ob.setLocationRelativeTo(null);
-                                ob.setVisible(true);
-                                this.dispose();
-                            }
                     }
                 }
-                cn.close();
             } catch (HeadlessException | SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
             }
         }
-}
+    }
 
-    public void registrarInicioSesion(int idUsuario) {
-            ConexionBD con = new ConexionBD();
-            Connection cn = con.Conexion();
-            String sql = "INSERT INTO inicios_sesiones (id_usuario, fecha_inicio) VALUES (?, NOW())";
+    public void registrarInicioSesion(Connection cn, int idUsuario) {
+        String sql = "INSERT INTO inicios_sesiones (id_usuario, fecha_inicio) VALUES (?, NOW())";
 
-            try {
-                try (PreparedStatement ps = cn.prepareStatement(sql)) {
-                    ps.setInt(1, idUsuario);
-                    int filasAfectadas = ps.executeUpdate();
+        try {
+            try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                ps.setInt(1, idUsuario);
+                int filasAfectadas = ps.executeUpdate();
 
-                    if (filasAfectadas > 0) {
-
-                    } else {
-
-                    }
+                if (filasAfectadas > 0) {
+                    // ¿Hay algo que quieras hacer si la inserción es exitosa?
+                } else {
+                    // ¿Hay algo que quieras hacer si la inserción falla?
                 }
-                cn.close();
-            } catch (SQLException e) {
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Imprime el error para debug
         }
-}
+    }
+
 
     /**
      * @param args the command line arguments

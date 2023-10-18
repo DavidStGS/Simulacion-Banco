@@ -15,7 +15,6 @@ import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;

@@ -16,7 +16,6 @@ import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -103,12 +102,6 @@ public class Retirar extends javax.swing.JFrame {
                 String nombreTitular = rs.getString("nombre_titular");
                 String apellidosTitular = rs.getString("apellidos_titular");
                 String numeroCuenta = rs.getString("numero_cuenta");
-                String tipoCuenta = rs.getString("tipo_cuenta");
-                double saldo = rs.getDouble("saldo");
-                String ciudad = rs.getString("codigo_sucursal");
-                int codigoSucursal = rs.getInt("codigo_sucursal");
-                String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
-
                 String identificacion = rs.getString("identificacion"); // Obtener la identificacion
 
                 jLabel1.setText(nombreTitular);
@@ -116,36 +109,38 @@ public class Retirar extends javax.swing.JFrame {
                 jLabel3.setText(numeroCuenta);
                 jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
             }
-        } catch (SQLException e) {
-        }
+        } catch (SQLException e) { // Asegúrate de imprimir el error para depurar
+            }
 }
-private void Retirar() {
-    
-        try {
-        double monto = Double.parseDouble(montoTxt.getText());
-        double saldoActual = obtenerSaldo(); // Obtener el saldo actual de la cuenta
-        if (monto <= saldoActual) {
-            String sql = "UPDATE cuentas_bancarias SET saldo = saldo - ? WHERE id_usuario = ?";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setDouble(1, monto);
-            pst.setInt(2, idUsuario);
 
-            int filasAfectadas = pst.executeUpdate();
-            if (filasAfectadas > 0) {
-                Loading11 ob = new Loading11();
-                ob.setVisible(true);
-                RetiroPass op = new RetiroPass(idUsuario);
-                op.setVisible(true);
-                montoTxt.setText("");
-                ob.setVisible(false);
-                    // Actualizar los datos mostrados después del retiro
-            } else {
-                Loading11 ob = new Loading11();
-                ob.setVisible(true);
-                RetiroDeng op = new RetiroDeng(idUsuario);
-                op.setVisible(true);
-                montoTxt.setText("");
-                ob.setVisible(false);
+    private void Retirar() {
+        try {
+            double monto = Double.parseDouble(montoTxt.getText());
+            double saldoActual = obtenerSaldo(); // Obtener el saldo actual de la cuenta
+
+            if (monto <= saldoActual) {
+                String sql = "UPDATE cuentas_bancarias SET saldo = saldo - ? WHERE id_usuario = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setDouble(1, monto);
+                pst.setInt(2, idUsuario);
+
+                int filasAfectadas = pst.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    Loading11 ob = new Loading11();
+                    ob.setVisible(true);
+                    RetiroPass op = new RetiroPass(idUsuario);
+                    op.setVisible(true);
+                    montoTxt.setText("");
+                    ob.setVisible(false);
+
+                } else {
+                    Loading11 ob = new Loading11();
+                    ob.setVisible(true);
+                    RetiroDeng op = new RetiroDeng(idUsuario);
+                    op.setVisible(true);
+                    montoTxt.setText("");
+                    ob.setVisible(false);
                 }
             } else {
                 Loading11 ob = new Loading11();
@@ -155,24 +150,27 @@ private void Retirar() {
                 montoTxt.setText("");
                 ob.setVisible(false);
             }
-        } catch (HeadlessException | NumberFormatException | SQLException e) {
-        }
+        } catch (HeadlessException | NumberFormatException | SQLException e) { // Asegúrate de imprimir el error para depurar
+            }
 }
-private double obtenerSaldo() {
-    try {
-        String sql = "SELECT saldo FROM cuentas_bancarias WHERE id_usuario = ?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getDouble("saldo");
-        }
-        } catch (SQLException e) {
-        }
 
-    return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
+    private double obtenerSaldo() {
+        try {
+            String sql = "SELECT saldo FROM cuentas_bancarias WHERE id_usuario = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("saldo");
+                }
+            } catch (SQLException e) {
+                }
+
+        return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
 }
+    
     public Retirar() {
         initComponents();
     }
