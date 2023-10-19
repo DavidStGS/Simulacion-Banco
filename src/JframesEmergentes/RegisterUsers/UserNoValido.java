@@ -4,9 +4,7 @@
  */
 package JframesEmergentes.RegisterUsers;
 
-import JframesEmergentes.*;
 import banco.Login;
-import banco.Register;
 import java.awt.Toolkit;
 import looadingPages.Loading11;
     
@@ -90,7 +88,6 @@ public class UserNoValido extends javax.swing.JFrame {
         ob.setVisible(true);
         this.dispose();
         ob.setVisible(false);
-        op.setVisible(false);
     }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
     /**

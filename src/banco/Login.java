@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BDConexion.ConexionBD;
 import BCrypt.BCrypt;
+import JframesEmergentes.RegisterUsers.CamposObligatoriosLog;
 import JframesEmergentes.RegisterUsers.EmailNoValidoLog;
 import JframesEmergentes.RegisterUsers.ErrorPassLog;
 import JframesEmergentes.RegisterUsers.UserNoValido;
@@ -418,10 +419,8 @@ public class Login extends javax.swing.JFrame {
         
     // Verificar que ningún campo esté vacío
         if (userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-                            Loading11 ob = new Loading11();
-                            ob.setVisible(false);
-                            this.setVisible(true);
+            CamposObligatoriosLog ob = new CamposObligatoriosLog();
+            ob.setVisible(true);
             return false;
         }
 
@@ -497,13 +496,10 @@ public class Login extends javax.swing.JFrame {
                 int filasAfectadas = ps.executeUpdate();
 
                 if (filasAfectadas > 0) {
-                    // ¿Hay algo que quieras hacer si la inserción es exitosa?
                 } else {
-                    // ¿Hay algo que quieras hacer si la inserción falla?
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Imprime el error para debug
+        } catch (SQLException e) { // Imprime el error para debug
         }
     }
 

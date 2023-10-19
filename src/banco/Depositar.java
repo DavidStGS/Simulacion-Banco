@@ -15,6 +15,7 @@ import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -101,16 +102,15 @@ public class Depositar extends javax.swing.JFrame {
                 String nombreTitular = rs.getString("nombre_titular");
                 String apellidosTitular = rs.getString("apellidos_titular");
                 String numeroCuenta = rs.getString("numero_cuenta");
-                String tipoCuenta = rs.getString("tipo_cuenta");
-                double saldo = rs.getDouble("saldo");
-                String ciudad = rs.getString("codigo_sucursal");
-                int codigoSucursal = rs.getInt("codigo_sucursal");
-                String nombreCiudad = obtenerNombreCiudad(codigoSucursal);
+                int saldo = rs.getInt("saldo");
 
                 String identificacion = rs.getString("identificacion"); // Obtener la identificacion
-
+                NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
+                        String saldoFormateado = formatoSaldo.format(saldo);
+                        
                 jLabel1.setText(nombreTitular);
                 jLabel2.setText(apellidosTitular);
+                jLabel4.setText("$" + saldoFormateado);
                 jLabel3.setText(numeroCuenta);
                 jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
             }
@@ -134,7 +134,8 @@ private void Depositar() {
                 DepositoPass op = new DepositoPass(idUsuario);
                 op.setVisible(true);
                 montoTxt.setText("");
-                ob.setVisible(false);// Actualiza los datos mostrados después del depósito
+                ob.setVisible(false);
+                mostrarDatosCuenta1();
             } else {
                 Loading11 ob = new Loading11();
                 ob.setVisible(true);
@@ -188,10 +189,14 @@ private void Depositar() {
         UserLabel = new javax.swing.JLabel();
         rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(850, 520));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -201,31 +206,33 @@ private void Depositar() {
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("jLabel3");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 150, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 260, 150, 20));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 150, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 180, 150, 20));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel1.setText("jLabel1");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 150, 20));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 140, 150, 20));
 
         jLabel7.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel7.setText("Nombre");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel8.setText("Apellido");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel9.setText("N° Cuenta");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(102, 16, 141));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(0, 255, 255));
         rSPanelGradiente1.setGradiente(rspanelgradiente.RSPanelGradiente.Gradiente.CENTRAL);
+        rSPanelGradiente1.setMinimumSize(new java.awt.Dimension(290, 445));
+        rSPanelGradiente1.setPreferredSize(new java.awt.Dimension(290, 445));
         rSPanelGradiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
@@ -254,7 +261,7 @@ private void Depositar() {
                 jLabel14MouseExited(evt);
             }
         });
-        rSPanelGradiente1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 290, 30));
+        rSPanelGradiente1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 30));
 
         jLabel13.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,7 +279,7 @@ private void Depositar() {
                 jLabel13MouseExited(evt);
             }
         });
-        rSPanelGradiente1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 290, 30));
+        rSPanelGradiente1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 290, 30));
 
         jLabel15.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,9 +297,9 @@ private void Depositar() {
                 jLabel15MouseExited(evt);
             }
         });
-        rSPanelGradiente1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 30));
+        rSPanelGradiente1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 290, 30));
 
-        jPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 290, 500));
+        jPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 290, 530));
 
         header.setBackground(new java.awt.Color(255, 255, 255));
         header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -347,13 +354,13 @@ private void Depositar() {
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 180, 160, 20));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 160, 170, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 220, 160, 20));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 200, 170, 20));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 300, 160, 20));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 280, 170, 20));
 
         jLabel12.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         jLabel12.setText("DEPOSITAR DINERO");
@@ -365,14 +372,14 @@ private void Depositar() {
 
         jLabel17.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
         jLabel17.setText("Cedula");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel18.setText("jLabel6");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 150, 20));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 220, 150, 20));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 260, 160, 20));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 240, 170, 20));
 
         montoTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         montoTxt.setBorder(null);
@@ -396,11 +403,11 @@ private void Depositar() {
                 montoTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 290, 30));
+        jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 290, 30));
 
         UserLabel.setFont(new java.awt.Font("Roboto Bk", 1, 16)); // NOI18N
         UserLabel.setText("Depositar Monto");
-        jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
+        jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
         rSButtonGradiente1.setText("Depositar");
         rSButtonGradiente1.setToolTipText("");
@@ -415,12 +422,23 @@ private void Depositar() {
                 rSButtonGradiente1ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 130, -1));
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 130, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 290, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 290, 10));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 500));
+        jLabel10.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel10.setText("Monto");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setText("jLabel3");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 300, 150, 20));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 320, 170, 20));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -621,6 +639,7 @@ private double obtenerSaldo() {
     private javax.swing.JPanel exitbtn;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -630,6 +649,7 @@ private double obtenerSaldo() {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -638,6 +658,7 @@ private double obtenerSaldo() {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel logolabel;
     private javax.swing.JLabel logolabel1;

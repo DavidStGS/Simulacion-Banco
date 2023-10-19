@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 public class DepositoPass extends javax.swing.JFrame {
     
     private final Depositar op;
-    private static int idUsuario;
     
     public DepositoPass(int idUsuario){
         initComponents();
