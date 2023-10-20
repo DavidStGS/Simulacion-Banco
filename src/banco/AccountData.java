@@ -51,20 +51,22 @@ public class AccountData extends javax.swing.JFrame {
                    // sucursal.
     }
 
-    public String obtenerNombreCiudad(int codigoSucursal) {
-        try {
-            String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setInt(1, codigoSucursal);
-            ResultSet rs = pst.executeQuery();
+public String obtenerNombreCiudad(int codigoSucursal) {
+    try {
+        String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
+        PreparedStatement pst = cn.prepareStatement(sql);
+        pst.setInt(1, codigoSucursal);
+        ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                return rs.getString("nombre_ciudad");
-            }
-        } catch (SQLException e) {
+        if (rs.next()) {
+            return rs.getString("nombre_ciudad");
         }
-        return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
+    } catch (SQLException e) {
+        e.printStackTrace(); // Imprimir el error para debug
     }
+    return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
+}
+
 
     private void mostrarDatosCuenta() {
         try {

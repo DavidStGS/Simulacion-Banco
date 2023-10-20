@@ -11,6 +11,7 @@ import JframesEmergentes.RegisterUsers.CamposObligatoriosLog;
 import JframesEmergentes.RegisterUsers.EmailNoValidoLog;
 import JframesEmergentes.RegisterUsers.ErrorPassLog;
 import JframesEmergentes.RegisterUsers.UserNoValido;
+import static java.awt.Color.BLACK;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -18,9 +19,14 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import looadingPages.Loading11;
+import java.sql.PreparedStatement;
+import java.util.prefs.Preferences;
 
 public class Login extends javax.swing.JFrame {
-
+    
+    Preferences preference;
+    boolean rememberPreference;
+    
     int xMouse, yMouse;
 
     public Login() {
@@ -31,7 +37,7 @@ public class Login extends javax.swing.JFrame {
         // Agregar un KeyListener al campo de texto passTxt para activar el botón
         // rSButtonGradiente1
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
-
+        
         passTxt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -50,12 +56,31 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
-
+        SaveEmail();
+        startComponent();
     }
-
+    
+    public void SaveEmail(){
+        preference = Preferences.userNodeForPackage(this.getClass());
+        rememberPreference = preference.getBoolean("remember", Boolean.valueOf(""));
+        if(rememberPreference){
+            userTxt.setText(preference.get("correo_electronico", ""));
+            passTxt.setText(preference.get("Contraseña", ""));
+            remember.setSelected(rememberPreference);
+        }
+}
+    public void startComponent(){
+        if(!userTxt.getText().equals("correo_electronico") && !passTxt.getText().equals("Contraseña")){
+            userTxt.setForeground(BLACK);
+            passTxt.setForeground(BLACK);
+        }
+        
+        
+}
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -76,6 +101,7 @@ public class Login extends javax.swing.JFrame {
         rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
         jLabel2 = new javax.swing.JLabel();
         rSButtonGradiente2 = new rsbuttongradiente.RSButtonGradiente();
+        remember = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -130,11 +156,9 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnExitTxtMouseExited(evt);
             }
@@ -143,35 +167,34 @@ public class Login extends javax.swing.JFrame {
         javax.swing.GroupLayout exitbtnLayout = new javax.swing.GroupLayout(exitbtn);
         exitbtn.setLayout(exitbtnLayout);
         exitbtnLayout.setHorizontalGroup(
-                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(exitbtnLayout.createSequentialGroup()
-                                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)));
+            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(exitbtnLayout.createSequentialGroup()
+                .addComponent(btnExitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
         exitbtnLayout.setVerticalGroup(
-                exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            exitbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnExitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(headerLayout.createSequentialGroup()
-                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 810, Short.MAX_VALUE)));
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 810, Short.MAX_VALUE))
+        );
         headerLayout.setVerticalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(
-                getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
@@ -189,15 +212,12 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userTxtMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxtMousePressed(evt);
             }
@@ -225,15 +245,12 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 passTxtMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 passTxtMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 passTxtMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 passTxtMousePressed(evt);
             }
@@ -282,15 +299,21 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, 130, -1));
 
+        remember.setBackground(new java.awt.Color(255, 255, 255));
+        remember.setFont(new java.awt.Font("Roboto Bk", 1, 14)); // NOI18N
+        remember.setText("Remember Me");
+        jPanel1.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -469,56 +492,42 @@ public class Login extends javax.swing.JFrame {
 
     public void validar() {
 
-        if (validarCampos()) {
+    if (validarCampos()) {
+        String correo = userTxt.getText();
+        String contrasena = String.valueOf(passTxt.getPassword());
+
+        String sql = "SELECT * FROM usuarios WHERE correo_electronico=?";
+
+        try {
             ConexionBD con = new ConexionBD();
-            Connection cn = con.Conexion();
-            int resultado = 0;
-            String correo = userTxt.getText();
-            String contrasena = String.valueOf(passTxt.getPassword());
-
-            String sql = "SELECT * FROM usuarios WHERE correo_electronico='" + correo + "'";
-
-            try {
-                try (java.sql.Statement set = cn.createStatement()) {
-                    ResultSet resul = set.executeQuery(sql);
-
-                    if (resul.next()) {
-                        String hashedContrasena = resul.getString("contrasena");
-                        if (BCrypt.checkpw(contrasena, hashedContrasena)) {
-                            resultado = 1;
-                            if (resultado == 1) {
-                                int idUsuario = resul.getInt("id");
-                                Loading11 oa = new Loading11();
-                                oa.setVisible(true);
-                                AccountData ob = new AccountData(idUsuario);
-                                ob.setLocationRelativeTo(null);
-                                ob.setVisible(true);
-                                this.dispose();
-                                oa.setVisible(false);
-                            }
-                        } else {
-                            Loading11 oa = new Loading11();
-                            oa.setVisible(true);
-                            UserNoValido op = new UserNoValido();
-                            op.setVisible(true);
-                            oa.setVisible(false);
-                            this.dispose();
-                            int choice = 0;
-
-                            if (choice == 0) {
-                                // Volver a intentar
-                                userTxt.setText(""); // Limpiar los campos
-                                passTxt.setText("");
-                                Loading11 ob = new Loading11();
-                                ob.setVisible(false);
-                                this.setVisible(true);
-                            } else if (choice == 1) {
-                                Loading ob = new Loading();
-                                ob.setLocationRelativeTo(null);
-                                ob.setVisible(true);
-                                this.dispose();
-                            }
+            try (Connection cn = con.Conexion()) {
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setString(1, correo);
+                
+                ResultSet resul = ps.executeQuery();
+                
+                if (resul.next()) {
+                    String hashedContrasena = resul.getString("contrasena");
+                    if (BCrypt.checkpw(contrasena, hashedContrasena)) {
+                        int idUsuario = resul.getInt("id");
+                        
+                        if(remember.isSelected() && !rememberPreference){
+                            preference.put("correo_electronico", userTxt.getText());
+                            preference.put("Contraseña", passTxt.getText());
+                            preference.putBoolean("remember", true);
+                        }else if (!remember.isSelected() && rememberPreference){
+                            preference.put("correo_electronico", "");
+                            preference.put("Contraseña", "");
+                            preference.putBoolean("remember", false);
                         }
+                        
+                        Loading11 oa = new Loading11();
+                        oa.setVisible(true);
+                        AccountData ob = new AccountData(idUsuario);
+                        ob.setLocationRelativeTo(null);
+                        ob.setVisible(true);
+                        this.dispose();
+                        oa.setVisible(false);
                     } else {
                         Loading11 oa = new Loading11();
                         oa.setVisible(true);
@@ -541,13 +550,35 @@ public class Login extends javax.swing.JFrame {
                             this.dispose();
                         }
                     }
+                } else {
+                    Loading11 oa = new Loading11();
+                    oa.setVisible(true);
+                    UserNoValido op = new UserNoValido();
+                    op.setVisible(true);
+                    oa.setVisible(false);
+                    this.dispose();
+                    int choice = 0;
+                    if (choice == 0) {
+                        // Volver a intentar
+                        userTxt.setText(""); // Limpiar los campos
+                        passTxt.setText("");
+                        Loading11 ob = new Loading11();
+                        ob.setVisible(false);
+                        this.setVisible(true);
+                    } else if (choice == 1) {
+                        Loading ob = new Loading();
+                        ob.setLocationRelativeTo(null);
+                        ob.setVisible(true);
+                        this.dispose();
+                    }
                 }
-                cn.close();
-            } catch (HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
             }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
     }
+}
+
 
     /**
      * @param args the command line arguments
@@ -607,6 +638,7 @@ public class Login extends javax.swing.JFrame {
     private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private rsbuttongradiente.RSButtonGradiente rSButtonGradiente2;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
+    private javax.swing.JCheckBox remember;
     private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
 }
