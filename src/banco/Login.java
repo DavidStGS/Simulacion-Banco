@@ -11,18 +11,24 @@ import JframesEmergentes.RegisterUsers.CamposObligatoriosLog;
 import JframesEmergentes.RegisterUsers.EmailNoValidoLog;
 import JframesEmergentes.RegisterUsers.ErrorPassLog;
 import JframesEmergentes.RegisterUsers.UserNoValido;
+import static java.awt.Color.BLACK;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.prefs.Preferences;
 import javax.swing.ImageIcon;
 import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
     
+    Preferences preference;
+    boolean rememberPreference;
+    
     int xMouse, yMouse;
+    
     public Login() {
         initComponents();
         TextPrompt Prueba = new TextPrompt("Email",userTxt);
@@ -48,8 +54,11 @@ public class Login extends javax.swing.JFrame {
             }    
         }
     });
-        
+        SaveEmail();
+        startComponent();
     }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -66,12 +75,14 @@ public class Login extends javax.swing.JFrame {
         UserLabel = new javax.swing.JLabel();
         userTxt = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        PassLabel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         passTxt = new javax.swing.JPasswordField();
         rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
         jLabel2 = new javax.swing.JLabel();
         rSButtonGradiente2 = new rsbuttongradiente.RSButtonGradiente();
+        PassLabel1 = new javax.swing.JLabel();
+        remember = new RSMaterialComponent.RSCheckBoxMaterial();
+        PassLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -202,10 +213,6 @@ public class Login extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 400, 10));
 
-        PassLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        PassLabel.setText("CONTRASEÑA");
-        jPanel1.add(PassLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
-
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 400, 20));
 
@@ -244,7 +251,7 @@ public class Login extends javax.swing.JFrame {
                 rSButtonGradiente1ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 130, -1));
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, -1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ver.png"))); // NOI18N
@@ -267,7 +274,26 @@ public class Login extends javax.swing.JFrame {
                 rSButtonGradiente2ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, 130, -1));
+        jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 130, -1));
+
+        PassLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
+        PassLabel1.setText("RECORDARME");
+        jPanel1.add(PassLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 370, -1, -1));
+
+        remember.setForeground(new java.awt.Color(0, 0, 0));
+        remember.setColorCheck(new java.awt.Color(0, 0, 0));
+        remember.setColorUnCheck(new java.awt.Color(0, 0, 0));
+        remember.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        remember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rememberActionPerformed(evt);
+            }
+        });
+        jPanel1.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 368, 20, 20));
+
+        PassLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        PassLabel2.setText("CONTRASEÑA");
+        jPanel1.add(PassLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -282,7 +308,21 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        public void SaveEmail(){
+        preference = Preferences.userNodeForPackage(this.getClass());
+        rememberPreference = preference.getBoolean("remember", Boolean.valueOf(""));
+        if(rememberPreference){
+            userTxt.setText(preference.get("correo_electronico", ""));
+            passTxt.setText(preference.get("Contraseña", ""));
+            remember.setSelected(rememberPreference);
+        }
+}
+    public void startComponent(){
+        if(!userTxt.getText().equals("correo_electronico") && !passTxt.getText().equals("Contraseña")){
+            userTxt.setForeground(BLACK);
+            passTxt.setForeground(BLACK);
+        }        
+}
     private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTxtActionPerformed
@@ -415,6 +455,10 @@ public class Login extends javax.swing.JFrame {
         ob.setVisible(true);
     }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
 
+    private void rememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rememberActionPerformed
+
     private boolean validarCampos() {
         
     // Verificar que ningún campo esté vacío
@@ -458,6 +502,15 @@ public class Login extends javax.swing.JFrame {
                         String hashedContrasena = resul.getString("contrasena");
                         if (BCrypt.checkpw(contrasena, hashedContrasena)) {
                             int idUsuario = resul.getInt("id");
+                            if(remember.isSelected() && !rememberPreference){
+                                preference.put("correo_electronico", userTxt.getText());
+                                preference.put("Contraseña", passTxt.getText());
+                                preference.putBoolean("remember", true);
+                            }else if (!remember.isSelected() && rememberPreference){
+                                preference.put("correo_electronico", "");
+                                preference.put("Contraseña", "");
+                                preference.putBoolean("remember", false);
+                            } 
                             Loading11 oa = new Loading11();
                             oa.setVisible(true);
                             registrarInicioSesion(cn, idUsuario);
@@ -540,7 +593,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel PassLabel;
+    private javax.swing.JLabel PassLabel1;
+    private javax.swing.JLabel PassLabel2;
     private javax.swing.JLabel UserLabel;
     private javax.swing.JLabel btnExitTxt;
     private javax.swing.JPanel exitbtn;
@@ -557,6 +611,7 @@ public class Login extends javax.swing.JFrame {
     private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private rsbuttongradiente.RSButtonGradiente rSButtonGradiente2;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
+    private RSMaterialComponent.RSCheckBoxMaterial remember;
     private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
 }
