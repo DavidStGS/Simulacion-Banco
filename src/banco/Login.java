@@ -313,14 +313,12 @@ public class Login extends javax.swing.JFrame {
         rememberPreference = preference.getBoolean("remember", Boolean.valueOf(""));
         if(rememberPreference){
             userTxt.setText(preference.get("correo_electronico", ""));
-            passTxt.setText(preference.get("Contraseña", ""));
             remember.setSelected(rememberPreference);
         }
 }
     public void startComponent(){
-        if(!userTxt.getText().equals("correo_electronico") && !passTxt.getText().equals("Contraseña")){
+        if(!userTxt.getText().equals("correo_electronico")){
             userTxt.setForeground(BLACK);
-            passTxt.setForeground(BLACK);
         }        
 }
     private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
@@ -504,11 +502,9 @@ public class Login extends javax.swing.JFrame {
                             int idUsuario = resul.getInt("id");
                             if(remember.isSelected() && !rememberPreference){
                                 preference.put("correo_electronico", userTxt.getText());
-                                preference.put("Contraseña", passTxt.getText());
                                 preference.putBoolean("remember", true);
                             }else if (!remember.isSelected() && rememberPreference){
                                 preference.put("correo_electronico", "");
-                                preference.put("Contraseña", "");
                                 preference.putBoolean("remember", false);
                             } 
                             Loading11 oa = new Loading11();
