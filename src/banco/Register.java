@@ -1,4 +1,3 @@
-
 package banco;
 
 import java.awt.Color;
@@ -26,89 +25,88 @@ import javax.swing.text.DocumentFilter;
 import looadingPages.Loading11;
 
 public class Register extends javax.swing.JFrame {
-    
+
     int xMouse, yMouse;
+
     public Register() {
         initComponents();
         llenarComboBoxSucursales();
-        TextPrompt Prueba4 = new TextPrompt("Cedula",userTxt3);
-        TextPrompt Prueba2 = new TextPrompt("Nombre",userTxt1);
-        TextPrompt Prueba3 = new TextPrompt("Apellido",userTxt2);
-        TextPrompt Prueba = new TextPrompt("Email",userTxt);
-        TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
+        TextPrompt Prueba4 = new TextPrompt("Cedula", userTxt3);
+        TextPrompt Prueba2 = new TextPrompt("Nombre", userTxt1);
+        TextPrompt Prueba3 = new TextPrompt("Apellido", userTxt2);
+        TextPrompt Prueba = new TextPrompt("Email", userTxt);
+        TextPrompt Prueba1 = new TextPrompt("Contraseña", passTxt);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
         ((AbstractDocument) userTxt3.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.insertString(fb, offset, text, attr);
-        }
-    }
+            @Override
+            public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
 
-    @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.replace(fb, offset, length, text, attrs);
-        }
-    }
-    });
-        
-((AbstractDocument) userTxt1.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        if (text.matches("\\p{Alpha}+")) {
-            super.insertString(fb, offset, text, attr);
-        }
-    }
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
 
-    @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("^[a-zA-Z ]+$")) {
-            super.replace(fb, offset, length, text, attrs);
-        }
-    }
-});
+        ((AbstractDocument) userTxt1.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (text.matches("\\p{Alpha}+")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
 
-((AbstractDocument) userTxt2.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        if (text.matches("^[a-zA-Z ]+$")) {
-            super.insertString(fb, offset, text, attr);
-        }
-    }
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("^[a-zA-Z ]+$")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
 
-    @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("^[a-zA-Z ]+$")) {
-            super.replace(fb, offset, length, text, attrs);
-        }
-    }
-});
+        ((AbstractDocument) userTxt2.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(DocumentFilter.FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (text.matches("^[a-zA-Z ]+$")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
 
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("^[a-zA-Z ]+$")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
 
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente2
-        passTxt.addKeyListener (new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente2.doClick();
+        passTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente2.doClick();
+                }
             }
-        }
-    });
+        });
         // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente2
         userTxt.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente2.doClick();
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente2.doClick();
+                }
             }
-        }
-    });
+        });
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -189,7 +187,9 @@ public class Register extends javax.swing.JFrame {
         exitbtn.setFont(new java.awt.Font("Roboto Light", 1, 24)); // NOI18N
         exitbtn.setPreferredSize(new java.awt.Dimension(40, 40));
 
+        btnExitTxt.setBackground(new java.awt.Color(255, 255, 255));
         btnExitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        btnExitTxt.setForeground(new java.awt.Color(0, 0, 0));
         btnExitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExitTxt.setText("X");
         btnExitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -236,15 +236,21 @@ public class Register extends javax.swing.JFrame {
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("REGISTRASE");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
+        UserLabel.setBackground(new java.awt.Color(255, 255, 255));
         UserLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        UserLabel.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel.setText("CORREO ELECTRONICO");
         jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
+        userTxt.setBackground(new java.awt.Color(255, 255, 255));
         userTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        userTxt.setForeground(new java.awt.Color(0, 0, 0));
         userTxt.setBorder(null);
         userTxt.setCaretColor(new java.awt.Color(204, 204, 204));
         userTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -271,14 +277,18 @@ public class Register extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 400, 10));
 
+        PassLabel.setBackground(new java.awt.Color(255, 255, 255));
         PassLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        PassLabel.setForeground(new java.awt.Color(0, 0, 0));
         PassLabel.setText("CONTRASEÑA");
         jPanel1.add(PassLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 410, 20));
 
+        passTxt.setBackground(new java.awt.Color(255, 255, 255));
         passTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        passTxt.setForeground(new java.awt.Color(0, 0, 0));
         passTxt.setBorder(null);
         passTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -315,11 +325,15 @@ public class Register extends javax.swing.JFrame {
         });
         jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 460, 130, -1));
 
+        UserLabel1.setBackground(new java.awt.Color(255, 255, 255));
         UserLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        UserLabel1.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel1.setText("CIUDAD");
         jPanel1.add(UserLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, -1, -1));
 
+        userTxt1.setBackground(new java.awt.Color(255, 255, 255));
         userTxt1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        userTxt1.setForeground(new java.awt.Color(0, 0, 0));
         userTxt1.setBorder(null);
         userTxt1.setCaretColor(new java.awt.Color(204, 204, 204));
         userTxt1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -346,11 +360,15 @@ public class Register extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 180, 10));
 
+        PassLabel1.setBackground(new java.awt.Color(255, 255, 255));
         PassLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        PassLabel1.setForeground(new java.awt.Color(0, 0, 0));
         PassLabel1.setText("APELLIDO");
         jPanel1.add(PassLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
 
+        userTxt2.setBackground(new java.awt.Color(255, 255, 255));
         userTxt2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        userTxt2.setForeground(new java.awt.Color(0, 0, 0));
         userTxt2.setBorder(null);
         userTxt2.setCaretColor(new java.awt.Color(204, 204, 204));
         userTxt2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -394,7 +412,9 @@ public class Register extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-logotipo-de-java-coffee-cup-64.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
+        UserLabel2.setBackground(new java.awt.Color(255, 255, 255));
         UserLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        UserLabel2.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel2.setText("NOMBRE");
         jPanel1.add(UserLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
@@ -408,11 +428,15 @@ public class Register extends javax.swing.JFrame {
         });
         jPanel1.add(rSComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
 
+        UserLabel3.setBackground(new java.awt.Color(255, 255, 255));
         UserLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        UserLabel3.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel3.setText("CEDULA");
         jPanel1.add(UserLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, -1));
 
+        userTxt3.setBackground(new java.awt.Color(255, 255, 255));
         userTxt3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        userTxt3.setForeground(new java.awt.Color(0, 0, 0));
         userTxt3.setBorder(null);
         userTxt3.setCaretColor(new java.awt.Color(204, 204, 204));
         userTxt3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -487,13 +511,13 @@ public class Register extends javax.swing.JFrame {
 
     private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseEntered
         exitbtn.setBackground(Color.red);
-        btnExitTxt.setForeground(Color.white); 
-        
+        btnExitTxt.setForeground(Color.white);
+
     }//GEN-LAST:event_btnExitTxtMouseEntered
 
     private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseExited
         exitbtn.setBackground(Color.white);
-        btnExitTxt.setForeground(Color.black);        
+        btnExitTxt.setForeground(Color.black);
     }//GEN-LAST:event_btnExitTxtMouseExited
 
     private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
@@ -526,7 +550,7 @@ public class Register extends javax.swing.JFrame {
         if (String.valueOf(passTxt.getPassword()).isEmpty()) {
             passTxt.setText("********");
             passTxt.setForeground(Color.gray);
-        }   */     
+        }   */
     }//GEN-LAST:event_userTxtMouseEntered
 
     private void userTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMouseExited
@@ -537,7 +561,7 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_userTxtMouseExited
 
     private void passTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMouseEntered
-       /* if (String.valueOf(passTxt.getPassword()).equals("********")) {
+        /* if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
             passTxt.setForeground(Color.black);
         }
@@ -571,15 +595,15 @@ public class Register extends javax.swing.JFrame {
         op.setLocationRelativeTo(null);
         ob.setVisible(false);
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
-    
+
     private int obtenerCodigoCiudadPorNombre(String nombreCiudad) {
         int codigoCiudad = -1;
 
-        try (Connection cn = new ConexionBD().Conexion()) {
+        try ( Connection cn = new ConexionBD().Conexion()) {
             String sql = "SELECT codigo_ciudad FROM sucursales WHERE nombre_ciudad = ?";
-            try (PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( PreparedStatement ps = cn.prepareStatement(sql)) {
                 ps.setString(1, nombreCiudad);
-                try (ResultSet rs = ps.executeQuery()) {
+                try ( ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         codigoCiudad = rs.getInt("codigo_ciudad");
                     }
@@ -590,51 +614,52 @@ public class Register extends javax.swing.JFrame {
             System.out.print("Error al obtener código de ciudad: " + e.getMessage());
         }
 
-    return codigoCiudad;
-}
+        return codigoCiudad;
+    }
 
     private boolean validarCampos() {
-    // Verificar que ningún campo esté vacío
-    if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty() ||
-            userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
-        CamposObligatorios op= new CamposObligatorios();
-        op.setVisible(true);
-        return false;
-    }
-    
-    // Verificar el formato del correo electrónico
-    String correo = userTxt.getText();
-    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        EmailNoValido op= new EmailNoValido();
-        op.setVisible(true);
-        return false;
-    }
-    
-    // Verificar la longitud de la contraseña
-    if (String.valueOf(passTxt.getPassword()).length() > 25) {
-        ErrorPass op= new ErrorPass();
-        op.setVisible(true);    
-        return false;
-    }
-    
-    String nombre = userTxt1.getText();
-    String apellidos = userTxt2.getText();
-    if (!nombre.matches("^[a-zA-Z ]+$") || !apellidos.matches("^[a-zA-Z ]+$")) {
-        JOptionPane.showMessageDialog(null, "Los campos de nombre y apellidos solo deben contener letras.");
-        Loading11 ob = new Loading11();
-        ob.setVisible(false);
-        this.setVisible(true);
-        return false;
-        
-    }
+        // Verificar que ningún campo esté vacío
+        if (userTxt1.getText().isEmpty() || userTxt2.getText().isEmpty()
+                || userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
+            CamposObligatorios op = new CamposObligatorios();
+            op.setVisible(true);
+            return false;
+        }
+
+        // Verificar el formato del correo electrónico
+        String correo = userTxt.getText();
+        if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            EmailNoValido op = new EmailNoValido();
+            op.setVisible(true);
+            return false;
+        }
+
+        // Verificar la longitud de la contraseña
+        if (String.valueOf(passTxt.getPassword()).length() > 25) {
+            ErrorPass op = new ErrorPass();
+            op.setVisible(true);
+            return false;
+        }
+
+        String nombre = userTxt1.getText();
+        String apellidos = userTxt2.getText();
+        if (!nombre.matches("^[a-zA-Z ]+$") || !apellidos.matches("^[a-zA-Z ]+$")) {
+            JOptionPane.showMessageDialog(null, "Los campos de nombre y apellidos solo deben contener letras.");
+            Loading11 ob = new Loading11();
+            ob.setVisible(false);
+            this.setVisible(true);
+            return false;
+
+        }
         if (String.valueOf(userTxt3.getText()).length() > 10) {
-            ErrorID op= new ErrorID();
-            op.setVisible(true);  
-        return false;
+            ErrorID op = new ErrorID();
+            op.setVisible(true);
+            return false;
+        }
+        // Si todas las validaciones pasan, retornar true
+        return true;
     }
-    // Si todas las validaciones pasan, retornar true
-    return true;
-}
+
     private void registrarUsuario() {
         if (validarCampos()) {
             String nombre = userTxt1.getText();
@@ -648,10 +673,10 @@ public class Register extends javax.swing.JFrame {
             String ciudadSeleccionada = (String) rSComboBox1.getSelectedItem();
             int codigoCiudad = obtenerCodigoCiudadPorNombre(ciudadSeleccionada);
 
-            try (Connection cn = new ConexionBD().Conexion()) {
-                String sql = "INSERT INTO usuarios (identificacion, nombre, apellidos, correo_electronico, contrasena, codigo_sucursal) " +
-                        "VALUES (?, ?, ?, ?, ?, ?)";
-                try (PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( Connection cn = new ConexionBD().Conexion()) {
+                String sql = "INSERT INTO usuarios (identificacion, nombre, apellidos, correo_electronico, contrasena, codigo_sucursal) "
+                        + "VALUES (?, ?, ?, ?, ?, ?)";
+                try ( PreparedStatement ps = cn.prepareStatement(sql)) {
                     ps.setString(1, cedula);
                     ps.setString(2, nombre);
                     ps.setString(3, apellidos);
@@ -662,22 +687,20 @@ public class Register extends javax.swing.JFrame {
                     int filasAfectadas = ps.executeUpdate();
 
                     if (filasAfectadas > 0) {
-                        Userpass ob= new Userpass();
+                        Userpass ob = new Userpass();
                         ob.setVisible(true);
                         this.dispose();
                     } else {
-                        UserDeng op= new UserDeng();
+                        UserDeng op = new UserDeng();
                         op.setVisible(true);
                     }
                 }
             } catch (SQLException e) {
-                UserDeng op= new UserDeng();
+                UserDeng op = new UserDeng();
                 op.setVisible(true);
             }
         }
-}
-
-
+    }
 
 
     private void userTxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxt1MouseClicked
@@ -751,7 +774,7 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSComboBox1ActionPerformed
     private boolean mostrarContrasena = false;
-    
+
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         mostrarContrasena = !mostrarContrasena; // Cambiar el estado
 
@@ -770,9 +793,9 @@ public class Register extends javax.swing.JFrame {
     private void llenarComboBoxSucursales() {
         rSComboBox1.removeAllItems();
 
-        try (Connection cn = new ConexionBD().Conexion()) {
+        try ( Connection cn = new ConexionBD().Conexion()) {
             String sql = "SELECT nombre_ciudad FROM sucursales";
-            try (PreparedStatement st = cn.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            try ( PreparedStatement st = cn.prepareStatement(sql);  ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     String nombreCiudad = rs.getString("nombre_ciudad");
                     rSComboBox1.addItem(nombreCiudad);
@@ -781,9 +804,8 @@ public class Register extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al llenar ComboBox de sucursales: " + e.getMessage());
         }
-}
+    }
 
-    
     /**
      * @param args the command line arguments
      */
@@ -867,7 +889,7 @@ public class Register extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

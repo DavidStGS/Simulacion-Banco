@@ -23,78 +23,78 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import looadingPages.Loading11;
 
-
 /**
  *
  * @author USER
  */
 public class Retirar extends javax.swing.JFrame {
-    ConexionBD con=new ConexionBD();
-    Connection cn=con.Conexion();
+
+    ConexionBD con = new ConexionBD();
+    Connection cn = con.Conexion();
     private int idUsuario;
     int xMouse, yMouse;
-    
+
     public Retirar(int idUsuario) {
-        
+
         initComponents();
         this.idUsuario = idUsuario;
-        TextPrompt Prueba = new TextPrompt("Escribe el Monto a Retirar",montoTxt);
+        TextPrompt Prueba = new TextPrompt("Escribe el Monto a Retirar", montoTxt);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
         ((AbstractDocument) montoTxt.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.insertString(fb, offset, text, attr);
-        }
-    }
+            @Override
+            public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
 
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.replace(fb, offset, length, text, attrs);
-        }
-    }
-});
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         mostrarDatosCuenta2();
     }
+
     public int obtenerCodigoSucursal(int idUsuario) {
-    try {
-        String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getInt("codigo_sucursala");
+            if (rs.next()) {
+                return rs.getInt("codigo_sucursala");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
     }
-    return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
-}
 
-    
     public String obtenerNombreCiudad(int codigoSucursal) {
-    try {
-        String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, codigoSucursal);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, codigoSucursal);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getString("nombre_ciudad");
+            if (rs.next()) {
+                return rs.getString("nombre_ciudad");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
     }
-    return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
-}
 
     private void mostrarDatosCuenta2() {
         try {
-            String sql = "SELECT cb.*, u.identificacion " +
-                         "FROM cuentas_bancarias cb " +
-                         "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                         "WHERE cb.id_usuario=?";
+            String sql = "SELECT cb.*, u.identificacion "
+                    + "FROM cuentas_bancarias cb "
+                    + "INNER JOIN usuarios u ON cb.id_usuario = u.id "
+                    + "WHERE cb.id_usuario=?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, idUsuario);
             ResultSet rs = pst.executeQuery();
@@ -105,10 +105,10 @@ public class Retirar extends javax.swing.JFrame {
                 String numeroCuenta = rs.getString("numero_cuenta");
                 int saldo = rs.getInt("saldo");
                 String identificacion = rs.getString("identificacion");// Obtener la identificacion
-                
+
                 NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
-                        String saldoFormateado = formatoSaldo.format(saldo);
-                        
+                String saldoFormateado = formatoSaldo.format(saldo);
+
                 jLabel1.setText(nombreTitular);
                 jLabel2.setText(apellidosTitular);
                 jLabel3.setText(numeroCuenta);
@@ -116,8 +116,8 @@ public class Retirar extends javax.swing.JFrame {
                 jLabel18.setText(identificacion); // Mostrar la identificacion en jLabel17
             }
         } catch (SQLException e) { // Asegúrate de imprimir el error para depurar
-            }
-}
+        }
+    }
 
     private void Retirar() {
         try {
@@ -139,7 +139,7 @@ public class Retirar extends javax.swing.JFrame {
                     op.setVisible(true);
                     montoTxt.setText("");
                     ob.setVisible(false);
-                    
+
                 } else {
                     Loading11 ob = new Loading11();
                     ob.setVisible(true);
@@ -157,9 +157,8 @@ public class Retirar extends javax.swing.JFrame {
                 ob.setVisible(false);
             }
         } catch (HeadlessException | NumberFormatException | SQLException e) { // Asegúrate de imprimir el error para depurar
-            }
-}
-
+        }
+    }
 
     private double obtenerSaldo() {
         try {
@@ -170,13 +169,13 @@ public class Retirar extends javax.swing.JFrame {
 
             if (rs.next()) {
                 return rs.getDouble("saldo");
-                }
-            } catch (SQLException e) {
-                }
+            }
+        } catch (SQLException e) {
+        }
 
         return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
-}
-    
+    }
+
     public Retirar() {
         initComponents();
     }
@@ -232,27 +231,39 @@ public class Retirar extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 260, 150, 20));
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 180, 150, 20));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 140, 150, 20));
 
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nombre");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Apellido");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("N° Cuenta");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
@@ -345,7 +356,9 @@ public class Retirar extends javax.swing.JFrame {
         exitbtn.setFont(new java.awt.Font("Roboto Light", 1, 24)); // NOI18N
         exitbtn.setPreferredSize(new java.awt.Dimension(40, 40));
 
+        btnExitTxt.setBackground(new java.awt.Color(255, 255, 255));
         btnExitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        btnExitTxt.setForeground(new java.awt.Color(0, 0, 0));
         btnExitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExitTxt.setText("X");
         btnExitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -388,7 +401,9 @@ public class Retirar extends javax.swing.JFrame {
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 280, 170, 20));
 
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("RETIRAR DINERO");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
@@ -396,18 +411,24 @@ public class Retirar extends javax.swing.JFrame {
         logolabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-blockchain-technology-64.png"))); // NOI18N
         jPanel1.add(logolabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 60, 60));
 
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Cedula");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
+        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("jLabel6");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 220, 150, 20));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 240, 170, 20));
 
+        montoTxt.setBackground(new java.awt.Color(255, 255, 255));
         montoTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        montoTxt.setForeground(new java.awt.Color(0, 0, 0));
         montoTxt.setBorder(null);
         montoTxt.setCaretColor(new java.awt.Color(204, 204, 204));
         montoTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -431,7 +452,9 @@ public class Retirar extends javax.swing.JFrame {
         });
         jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 290, 30));
 
+        UserLabel.setBackground(new java.awt.Color(255, 255, 255));
         UserLabel.setFont(new java.awt.Font("Roboto Bk", 1, 16)); // NOI18N
+        UserLabel.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel.setText("Retirar Monto");
         jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
@@ -453,11 +476,15 @@ public class Retirar extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 290, 10));
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Monto");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("jLabel3");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 300, 150, 20));
 
@@ -499,7 +526,7 @@ public class Retirar extends javax.swing.JFrame {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Depositar ob= new Depositar(idUsuario);
+        Depositar ob = new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
@@ -507,7 +534,7 @@ public class Retirar extends javax.swing.JFrame {
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
         // TODO add your handling code here:
-        jLabel14.setForeground(new Color(172,153,204));
+        jLabel14.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel14MouseEntered
 
@@ -521,14 +548,14 @@ public class Retirar extends javax.swing.JFrame {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Login ob= new Login();
+        Login ob = new Login();
         ob.setVisible(true);
         op.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
         // TODO add your handling code here:
-        jLabel13.setForeground(new Color(172,153,204));
+        jLabel13.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel13MouseEntered
 
@@ -586,14 +613,14 @@ public class Retirar extends javax.swing.JFrame {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        AccountData ob= new AccountData(idUsuario);
+        AccountData ob = new AccountData(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered
-        jLabel15.setForeground(new Color(172,153,204));
+        jLabel15.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel15MouseEntered
 
@@ -601,7 +628,7 @@ public class Retirar extends javax.swing.JFrame {
         jLabel15.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jLabel15MouseExited
-    
+
     /**
      * @param args the command line arguments
      */
@@ -637,7 +664,7 @@ public class Retirar extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

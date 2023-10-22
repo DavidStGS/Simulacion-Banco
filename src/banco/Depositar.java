@@ -22,78 +22,78 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import looadingPages.Loading11;
 
-
 /**
  *
  * @author USER
  */
 public class Depositar extends javax.swing.JFrame {
-    ConexionBD con=new ConexionBD();
-    Connection cn=con.Conexion();
+
+    ConexionBD con = new ConexionBD();
+    Connection cn = con.Conexion();
     private int idUsuario;
     int xMouse, yMouse;
-    
+
     public Depositar(int idUsuario) {
-        
+
         initComponents();
         this.idUsuario = idUsuario;
         mostrarDatosCuenta1();
-        TextPrompt Prueba = new TextPrompt("Escribe el Monto a Depositar",montoTxt);
+        TextPrompt Prueba = new TextPrompt("Escribe el Monto a Depositar", montoTxt);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
         ((AbstractDocument) montoTxt.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.insertString(fb, offset, text, attr);
-        }
+            @Override
+            public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.insertString(fb, offset, text, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (!text.matches("\\D+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
     }
 
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (!text.matches("\\D+")) {
-            super.replace(fb, offset, length, text, attrs);
-        }
-    }
-    });
-    }
     public int obtenerCodigoSucursal(int idUsuario) {
-    try {
-        String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getInt("codigo_sucursala");
+            if (rs.next()) {
+                return rs.getInt("codigo_sucursala");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
     }
-    return -1; // Devuelve un valor por defecto si hay un error o no se encuentra el código de sucursal.
-}
 
-    
     public String obtenerNombreCiudad(int codigoSucursal) {
-    try {
-        String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, codigoSucursal);
-        ResultSet rs = pst.executeQuery();
+        try {
+            String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, codigoSucursal);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getString("nombre_ciudad");
+            if (rs.next()) {
+                return rs.getString("nombre_ciudad");
+            }
+        } catch (SQLException e) {
         }
-    } catch (SQLException e) {
+        return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
     }
-    return ""; // Devuelve un valor por defecto si hay un error o no se encuentra la ciudad.
-}
 
     private void mostrarDatosCuenta1() {
         try {
-            String sql = "SELECT cb.*, u.identificacion " +
-                         "FROM cuentas_bancarias cb " +
-                         "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                         "WHERE cb.id_usuario=?";
+            String sql = "SELECT cb.*, u.identificacion "
+                    + "FROM cuentas_bancarias cb "
+                    + "INNER JOIN usuarios u ON cb.id_usuario = u.id "
+                    + "WHERE cb.id_usuario=?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, idUsuario);
             ResultSet rs = pst.executeQuery();
@@ -106,8 +106,8 @@ public class Depositar extends javax.swing.JFrame {
 
                 String identificacion = rs.getString("identificacion"); // Obtener la identificacion
                 NumberFormat formatoSaldo = NumberFormat.getIntegerInstance();
-                        String saldoFormateado = formatoSaldo.format(saldo);
-                        
+                String saldoFormateado = formatoSaldo.format(saldo);
+
                 jLabel1.setText(nombreTitular);
                 jLabel2.setText(apellidosTitular);
                 jLabel4.setText("$" + saldoFormateado);
@@ -116,8 +116,9 @@ public class Depositar extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
         }
-}
-private void Depositar() {
+    }
+
+    private void Depositar() {
         try {
             double monto = Double.parseDouble(montoTxt.getText());
             double saldoActual = obtenerSaldo();
@@ -125,9 +126,9 @@ private void Depositar() {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setDouble(1, monto); // Establece el monto
             pst.setInt(2, idUsuario);
-            
+
             int filasAfectadas = pst.executeUpdate();
-            
+
             if (filasAfectadas > 0) {
                 Loading11 ob = new Loading11();
                 ob.setVisible(true);
@@ -146,7 +147,7 @@ private void Depositar() {
             }
         } catch (HeadlessException | NumberFormatException | SQLException e) {
         }
-}
+    }
 
     public Depositar() {
         initComponents();
@@ -196,7 +197,6 @@ private void Depositar() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(850, 520));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -205,26 +205,32 @@ private void Depositar() {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 260, 150, 20));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 180, 150, 20));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 140, 150, 20));
 
         jLabel7.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nombre");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Apellido");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("N° Cuenta");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
@@ -320,6 +326,7 @@ private void Depositar() {
         exitbtn.setPreferredSize(new java.awt.Dimension(40, 40));
 
         btnExitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        btnExitTxt.setForeground(new java.awt.Color(0, 0, 0));
         btnExitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExitTxt.setText("X");
         btnExitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -363,6 +370,7 @@ private void Depositar() {
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 280, 170, 20));
 
         jLabel12.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("DEPOSITAR DINERO");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
@@ -371,17 +379,21 @@ private void Depositar() {
         jPanel1.add(logolabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 60, 60));
 
         jLabel17.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Cedula");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("jLabel6");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 220, 150, 20));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 240, 170, 20));
 
+        montoTxt.setBackground(new java.awt.Color(255, 255, 255));
         montoTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        montoTxt.setForeground(new java.awt.Color(0, 0, 0));
         montoTxt.setBorder(null);
         montoTxt.setCaretColor(new java.awt.Color(204, 204, 204));
         montoTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -406,6 +418,7 @@ private void Depositar() {
         jPanel1.add(montoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 290, 30));
 
         UserLabel.setFont(new java.awt.Font("Roboto Bk", 1, 16)); // NOI18N
+        UserLabel.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel.setText("Depositar Monto");
         jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
@@ -428,10 +441,12 @@ private void Depositar() {
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 290, 10));
 
         jLabel10.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Monto");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("jLabel3");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 300, 150, 20));
 
@@ -473,7 +488,7 @@ private void Depositar() {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Retirar ob= new Retirar(idUsuario);
+        Retirar ob = new Retirar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
@@ -481,7 +496,7 @@ private void Depositar() {
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
         // TODO add your handling code here:
-        jLabel14.setForeground(new Color(172,153,204));
+        jLabel14.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel14MouseEntered
 
@@ -502,7 +517,7 @@ private void Depositar() {
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
         // TODO add your handling code here:
-        jLabel13.setForeground(new Color(172,153,204));
+        jLabel13.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel13MouseEntered
 
@@ -555,33 +570,33 @@ private void Depositar() {
         this.setVisible(false);
         Depositar();
     }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
-private double obtenerSaldo() {
-    try {
-        String sql = "SELECT saldo FROM cuentas_bancarias WHERE id_usuario = ?";
-        PreparedStatement pst = cn.prepareStatement(sql);
-        pst.setInt(1, idUsuario);
-        ResultSet rs = pst.executeQuery();
+        private double obtenerSaldo() {
+            try {
+                String sql = "SELECT saldo FROM cuentas_bancarias WHERE id_usuario = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, idUsuario);
+                ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            return rs.getDouble("saldo");
-        }
-        } catch (SQLException e) {
-        }
+                if (rs.next()) {
+                    return rs.getDouble("saldo");
+                }
+            } catch (SQLException e) {
+            }
 
-    return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
-}
+            return 0; // En caso de error, retorna un saldo de 0 (o el valor que consideres apropiado)
+        }
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        AccountData ob= new AccountData(idUsuario);
+        AccountData ob = new AccountData(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered
-        jLabel15.setForeground(new Color(172,153,204));
+        jLabel15.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel15MouseEntered
 
@@ -589,49 +604,49 @@ private double obtenerSaldo() {
         jLabel15.setForeground(Color.WHITE);
         setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jLabel15MouseExited
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Depositar().setVisible(true);
-        });
-    }
+        /**
+         * @param args the command line arguments
+         */
+        public static void main(String args[]) {
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(() -> {
+                new Depositar().setVisible(true);
+            });
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel UserLabel;

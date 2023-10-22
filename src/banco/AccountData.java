@@ -15,32 +15,32 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import looadingPages.Loading11;
 
-
 /**
  *
  * @author USER
  */
 public class AccountData extends javax.swing.JFrame {
-    ConexionBD con=new ConexionBD();
-    Connection cn=con.Conexion();
+
+    ConexionBD con = new ConexionBD();
+    Connection cn = con.Conexion();
     private int idUsuario;
     int xMouse, yMouse;
-    
+
     public AccountData(int idUsuario) {
-        
+
         initComponents();
         this.idUsuario = idUsuario;
         mostrarDatosCuenta();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
     }
-    
+
     public int obtenerCodigoSucursal(int idUsuario) {
         try {
             String sql = "SELECT codigo_sucursal FROM usuarios WHERE id=?";
-            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+            try ( PreparedStatement pst = cn.prepareStatement(sql)) {
                 pst.setInt(1, idUsuario);
-                try (ResultSet rs = pst.executeQuery()) {
+                try ( ResultSet rs = pst.executeQuery()) {
                     if (rs.next()) {
                         return rs.getInt("codigo_sucursal");
                     }
@@ -49,16 +49,14 @@ public class AccountData extends javax.swing.JFrame {
         } catch (SQLException e) { // Imprimir el error para debug
         }
         return -1;
-}
+    }
 
-
-    
     public String obtenerNombreCiudad(int codigoSucursal) {
         try {
             String sql = "SELECT nombre_ciudad FROM sucursales WHERE codigo_ciudad=?";
-            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+            try ( PreparedStatement pst = cn.prepareStatement(sql)) {
                 pst.setInt(1, codigoSucursal);
-                try (ResultSet rs = pst.executeQuery()) {
+                try ( ResultSet rs = pst.executeQuery()) {
                     if (rs.next()) {
                         return rs.getString("nombre_ciudad");
                     }
@@ -66,21 +64,20 @@ public class AccountData extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             // Imprimir el error para debug
-            }
+        }
         return "";
-}
-
+    }
 
     private void mostrarDatosCuenta() {
         try {
-            String sql = "SELECT cb.*, u.identificacion, s.nombre_ciudad " +
-                         "FROM cuentas_bancarias cb " +
-                         "INNER JOIN usuarios u ON cb.id_usuario = u.id " +
-                         "INNER JOIN sucursales s ON cb.codigo_sucursal = s.codigo_ciudad " +
-                         "WHERE cb.id_usuario=?";
-            try (PreparedStatement pst = cn.prepareStatement(sql)) {
+            String sql = "SELECT cb.*, u.identificacion, s.nombre_ciudad "
+                    + "FROM cuentas_bancarias cb "
+                    + "INNER JOIN usuarios u ON cb.id_usuario = u.id "
+                    + "INNER JOIN sucursales s ON cb.codigo_sucursal = s.codigo_ciudad "
+                    + "WHERE cb.id_usuario=?";
+            try ( PreparedStatement pst = cn.prepareStatement(sql)) {
                 pst.setInt(1, idUsuario);
-                try (ResultSet rs = pst.executeQuery()) {
+                try ( ResultSet rs = pst.executeQuery()) {
                     if (rs.next()) {
                         String nombreTitular = rs.getString("nombre_titular");
                         String apellidosTitular = rs.getString("apellidos_titular");
@@ -104,10 +101,8 @@ public class AccountData extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) { // Imprimir el error para debug
-            }
-}
-
-
+        }
+    }
 
     public AccountData() {
         initComponents();
@@ -166,43 +161,63 @@ public class AccountData extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("jLabel5");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 360, 150, 20));
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 320, 150, 20));
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 280, 150, 20));
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 200, 150, 20));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 160, 150, 20));
 
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Monto");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nombre");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Apellido");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
 
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("N° Cuenta");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Tipo de  Cuenta");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
 
@@ -295,7 +310,9 @@ public class AccountData extends javax.swing.JFrame {
         exitbtn.setFont(new java.awt.Font("Roboto Light", 1, 24)); // NOI18N
         exitbtn.setPreferredSize(new java.awt.Dimension(40, 40));
 
+        btnExitTxt.setBackground(new java.awt.Color(255, 255, 255));
         btnExitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        btnExitTxt.setForeground(new java.awt.Color(0, 0, 0));
         btnExitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExitTxt.setText("X");
         btnExitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -344,15 +361,21 @@ public class AccountData extends javax.swing.JFrame {
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 160, 20));
 
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("DATOS DE LA CUENTA");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Ciudad");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
 
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("jLabel5");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 400, 150, 20));
 
@@ -363,11 +386,15 @@ public class AccountData extends javax.swing.JFrame {
         logolabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/icons8-blockchain-technology-64.png"))); // NOI18N
         jPanel1.add(logolabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 60, 60));
 
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Roboto Bk", 0, 16)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Cedula");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
 
+        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("jLabel6");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 240, 150, 20));
 
@@ -409,7 +436,7 @@ public class AccountData extends javax.swing.JFrame {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Depositar ob= new Depositar(idUsuario);
+        Depositar ob = new Depositar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
@@ -417,7 +444,7 @@ public class AccountData extends javax.swing.JFrame {
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
         // TODO add your handling code here:
-        jLabel13.setForeground(new Color(172,153,204));
+        jLabel13.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel13MouseEntered
 
@@ -439,7 +466,7 @@ public class AccountData extends javax.swing.JFrame {
 
     private void jLabel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseEntered
         // TODO add your handling code here:
-        jLabel14.setForeground(new Color(172,153,204));
+        jLabel14.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel14MouseEntered
 
@@ -453,14 +480,14 @@ public class AccountData extends javax.swing.JFrame {
         Loading11 op = new Loading11();
         op.setVisible(true);
         this.dispose();
-        Retirar ob= new Retirar(idUsuario);
+        Retirar ob = new Retirar(idUsuario);
         ob.setVisible(true);
         ob.setLocationRelativeTo(null);
         op.setVisible(false);
     }//GEN-LAST:event_jLabel19MouseClicked
 
     private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered
-        jLabel19.setForeground(new Color(172,153,204));
+        jLabel19.setForeground(new Color(172, 153, 204));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_jLabel19MouseEntered
 
@@ -492,7 +519,7 @@ public class AccountData extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

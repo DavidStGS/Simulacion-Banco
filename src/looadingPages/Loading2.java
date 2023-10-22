@@ -4,7 +4,6 @@
  */
 package looadingPages;
 
-import banco.*;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -71,14 +70,14 @@ public class Loading2 extends javax.swing.JFrame {
      * @throws javax.swing.UnsupportedLookAndFeelException
      */
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
-    try {
-        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-    }
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
 
-    java.awt.EventQueue.invokeLater(() -> {
-        new Loading2().setVisible(true);
-    });
+        java.awt.EventQueue.invokeLater(() -> {
+            new Loading2().setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

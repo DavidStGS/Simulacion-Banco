@@ -1,4 +1,3 @@
-
 package banco;
 
 import java.awt.Color;
@@ -23,42 +22,41 @@ import javax.swing.ImageIcon;
 import looadingPages.Loading11;
 
 public class Login extends javax.swing.JFrame {
-    
+
     Preferences preference;
     boolean rememberPreference;
-    
+
     int xMouse, yMouse;
-    
+
     public Login() {
         initComponents();
-        TextPrompt Prueba = new TextPrompt("Email",userTxt);
-        TextPrompt Prueba1 = new TextPrompt("Contraseña",passTxt);
+        TextPrompt Prueba = new TextPrompt("Email", userTxt);
+        TextPrompt Prueba1 = new TextPrompt("Contraseña", passTxt);
         this.setLocationRelativeTo(null);
         // Agregar un KeyListener al campo de texto passTxt para activar el botón rSButtonGradiente1
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
 
         passTxt.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente1.doClick();
-            }    
-        }
-    });
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente1.doClick();
+                }
+            }
+        });
         // Agregar un KeyListener al campo de texto userTxt para activar el botón rSButtonGradiente1
         userTxt.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                rSButtonGradiente1.doClick();
-            }    
-        }
-    });
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    rSButtonGradiente1.doClick();
+                }
+            }
+        });
         SaveEmail();
         startComponent();
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,6 +127,7 @@ public class Login extends javax.swing.JFrame {
         exitbtn.setPreferredSize(new java.awt.Dimension(40, 40));
 
         btnExitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        btnExitTxt.setForeground(new java.awt.Color(0, 0, 0));
         btnExitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExitTxt.setText("X");
         btnExitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -179,14 +178,18 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("INCIAR SESIÓN");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
         UserLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        UserLabel.setForeground(new java.awt.Color(0, 0, 0));
         UserLabel.setText("USUARIO");
         jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
+        userTxt.setBackground(new java.awt.Color(255, 255, 255));
         userTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        userTxt.setForeground(new java.awt.Color(0, 0, 0));
         userTxt.setBorder(null);
         userTxt.setCaretColor(new java.awt.Color(204, 204, 204));
         userTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -216,7 +219,9 @@ public class Login extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 400, 20));
 
+        passTxt.setBackground(new java.awt.Color(255, 255, 255));
         passTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        passTxt.setForeground(new java.awt.Color(0, 0, 0));
         passTxt.setBorder(null);
         passTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -277,6 +282,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(rSButtonGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 130, -1));
 
         PassLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
+        PassLabel1.setForeground(new java.awt.Color(0, 0, 0));
         PassLabel1.setText("RECORDARME");
         jPanel1.add(PassLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 370, -1, -1));
 
@@ -292,6 +298,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 368, 20, 20));
 
         PassLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        PassLabel2.setForeground(new java.awt.Color(0, 0, 0));
         PassLabel2.setText("CONTRASEÑA");
         jPanel1.add(PassLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
@@ -308,19 +315,20 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        public void SaveEmail(){
+        public void SaveEmail() {
         preference = Preferences.userNodeForPackage(this.getClass());
         rememberPreference = preference.getBoolean("remember", Boolean.valueOf(""));
-        if(rememberPreference){
+        if (rememberPreference) {
             userTxt.setText(preference.get("correo_electronico", ""));
             remember.setSelected(rememberPreference);
         }
-}
-    public void startComponent(){
-        if(!userTxt.getText().equals("correo_electronico")){
+    }
+
+    public void startComponent() {
+        if (!userTxt.getText().equals("correo_electronico")) {
             userTxt.setForeground(BLACK);
-        }        
-}
+        }
+    }
     private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTxtActionPerformed
@@ -346,13 +354,13 @@ public class Login extends javax.swing.JFrame {
 
     private void btnExitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseEntered
         exitbtn.setBackground(Color.red);
-        btnExitTxt.setForeground(Color.white); 
-        
+        btnExitTxt.setForeground(Color.white);
+
     }//GEN-LAST:event_btnExitTxtMouseEntered
 
     private void btnExitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseExited
         exitbtn.setBackground(Color.white);
-        btnExitTxt.setForeground(Color.black);        
+        btnExitTxt.setForeground(Color.black);
     }//GEN-LAST:event_btnExitTxtMouseExited
 
     private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
@@ -385,7 +393,7 @@ public class Login extends javax.swing.JFrame {
         if (String.valueOf(passTxt.getPassword()).isEmpty()) {
             passTxt.setText("********");
             passTxt.setForeground(Color.gray);
-        }   */     
+        }   */
     }//GEN-LAST:event_userTxtMouseEntered
 
     private void userTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMouseExited
@@ -396,7 +404,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_userTxtMouseExited
 
     private void passTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMouseEntered
-       /* if (String.valueOf(passTxt.getPassword()).equals("********")) {
+        /* if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
             passTxt.setForeground(Color.black);
         }
@@ -448,7 +456,7 @@ public class Login extends javax.swing.JFrame {
         Loading11 ob = new Loading11();
         ob.setVisible(true);
         this.dispose();
-        Register op= new Register();                
+        Register op = new Register();
         op.setVisible(true);
         ob.setVisible(true);
     }//GEN-LAST:event_rSButtonGradiente2ActionPerformed
@@ -458,8 +466,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_rememberActionPerformed
 
     private boolean validarCampos() {
-        
-    // Verificar que ningún campo esté vacío
+
+        // Verificar que ningún campo esté vacío
         if (userTxt.getText().isEmpty() || String.valueOf(passTxt.getPassword()).isEmpty()) {
             CamposObligatoriosLog ob = new CamposObligatoriosLog();
             ob.setVisible(true);
@@ -480,19 +488,19 @@ public class Login extends javax.swing.JFrame {
             op.setVisible(true);
             return false;
         }
-    // Si todas las validaciones pasan, retornar true
+        // Si todas las validaciones pasan, retornar true
         return true;
-}    
-    
+    }
+
     public void validar() {
         if (validarCampos()) {
             ConexionBD con = new ConexionBD();
-            try (Connection cn = con.Conexion()) {
+            try ( Connection cn = con.Conexion()) {
                 String correo = userTxt.getText();
                 String contrasena = String.valueOf(passTxt.getPassword());
                 String sql = "SELECT id, contrasena FROM usuarios WHERE correo_electronico=?";
 
-                try (PreparedStatement ps = cn.prepareStatement(sql)) {
+                try ( PreparedStatement ps = cn.prepareStatement(sql)) {
                     ps.setString(1, correo);
                     ResultSet resul = ps.executeQuery();
 
@@ -500,13 +508,13 @@ public class Login extends javax.swing.JFrame {
                         String hashedContrasena = resul.getString("contrasena");
                         if (BCrypt.checkpw(contrasena, hashedContrasena)) {
                             int idUsuario = resul.getInt("id");
-                            if(remember.isSelected() && !rememberPreference){
+                            if (remember.isSelected() && !rememberPreference) {
                                 preference.put("correo_electronico", userTxt.getText());
                                 preference.putBoolean("remember", true);
-                            }else if (!remember.isSelected() && rememberPreference){
+                            } else if (!remember.isSelected() && rememberPreference) {
                                 preference.put("correo_electronico", "");
                                 preference.putBoolean("remember", false);
-                            } 
+                            }
                             Loading11 oa = new Loading11();
                             oa.setVisible(true);
                             registrarInicioSesion(cn, idUsuario);
@@ -540,7 +548,7 @@ public class Login extends javax.swing.JFrame {
         String sql = "INSERT INTO inicios_sesiones (id_usuario, fecha_inicio) VALUES (?, NOW())";
 
         try {
-            try (PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( PreparedStatement ps = cn.prepareStatement(sql)) {
                 ps.setInt(1, idUsuario);
                 int filasAfectadas = ps.executeUpdate();
 
@@ -551,7 +559,6 @@ public class Login extends javax.swing.JFrame {
         } catch (SQLException e) { // Imprime el error para debug
         }
     }
-
 
     /**
      * @param args the command line arguments
@@ -576,7 +583,7 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
