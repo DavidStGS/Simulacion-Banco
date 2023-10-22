@@ -4,9 +4,7 @@
  */
 package JframesEmergentes.RegisterUsers;
 
-import JframesEmergentes.*;
 import banco.Login;
-import banco.Register;
 import java.awt.Toolkit;
 import looadingPages.Loading11;
     
@@ -20,6 +18,7 @@ public class ErrorPassLog extends javax.swing.JFrame {
        
     public ErrorPassLog() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

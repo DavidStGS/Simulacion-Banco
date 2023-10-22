@@ -18,6 +18,7 @@ public class ErrorID extends javax.swing.JFrame {
        
     public ErrorID() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

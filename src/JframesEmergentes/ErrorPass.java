@@ -18,6 +18,7 @@ public class ErrorPass extends javax.swing.JFrame {
        
     public ErrorPass() {
         initComponents();
+        setTitle("Advertencia" );
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

@@ -18,6 +18,7 @@ public class RetiroDeng extends javax.swing.JFrame {
        
     public RetiroDeng(int idUsuario) {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

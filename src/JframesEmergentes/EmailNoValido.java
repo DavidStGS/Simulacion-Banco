@@ -18,6 +18,7 @@ public class EmailNoValido extends javax.swing.JFrame {
        
     public EmailNoValido() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

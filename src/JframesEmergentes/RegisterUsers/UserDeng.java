@@ -4,7 +4,6 @@
  */
 package JframesEmergentes.RegisterUsers;
 
-import JframesEmergentes.*;
 import banco.Login;
 import banco.Register;
 import java.awt.Toolkit;
@@ -21,6 +20,7 @@ public class UserDeng extends javax.swing.JFrame {
     
     public UserDeng() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

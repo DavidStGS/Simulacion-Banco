@@ -18,6 +18,7 @@ public class UserNoValido extends javax.swing.JFrame {
        
     public UserNoValido() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

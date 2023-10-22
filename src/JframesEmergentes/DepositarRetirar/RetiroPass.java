@@ -18,6 +18,7 @@ public class RetiroPass extends javax.swing.JFrame {
     
     public RetiroPass(int idUsuario){
         initComponents();
+        setTitle("Exito");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

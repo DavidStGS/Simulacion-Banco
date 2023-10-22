@@ -17,6 +17,7 @@ public class DepositoPass extends javax.swing.JFrame {
     
     public DepositoPass(int idUsuario){
         initComponents();
+        setTitle("Exito");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

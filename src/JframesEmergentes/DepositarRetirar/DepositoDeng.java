@@ -17,6 +17,7 @@ public class DepositoDeng extends javax.swing.JFrame {
        
     public DepositoDeng(int idUsuario) {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

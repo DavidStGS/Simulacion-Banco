@@ -4,9 +4,7 @@
  */
 package JframesEmergentes.RegisterUsers;
 
-import JframesEmergentes.*;
 import banco.Login;
-import banco.Register;
 import java.awt.Toolkit;
 import looadingPages.Loading11;
     
@@ -20,6 +18,7 @@ public class CamposObligatoriosLog extends javax.swing.JFrame {
        
     public CamposObligatoriosLog() {
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

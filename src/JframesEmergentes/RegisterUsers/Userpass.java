@@ -4,7 +4,6 @@
  */
 package JframesEmergentes.RegisterUsers;
 
-import JframesEmergentes.*;
 import banco.Login;
 import banco.Register;
 import java.awt.Toolkit;
@@ -20,6 +19,7 @@ public class Userpass extends javax.swing.JFrame {
     private final Login od;   
     public Userpass() {
         initComponents();
+        setTitle("Exito");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));

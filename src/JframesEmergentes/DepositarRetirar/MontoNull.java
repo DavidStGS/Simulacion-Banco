@@ -18,6 +18,7 @@ public class MontoNull extends javax.swing.JFrame {
     
     public MontoNull(int idUsuario){
         initComponents();
+        setTitle("Advertencia");
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png")));
